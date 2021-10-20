@@ -9,7 +9,6 @@ public class SchoolSchedule {
 
 
     public static void calcEndOfLesson(int lesson) {
-
         int start = ONE_HOUR * 9;
         int m = start + lesson * LESSON_DURATION;
         m += (lesson - 1) * SMALL_BREAK;

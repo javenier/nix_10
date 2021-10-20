@@ -7,7 +7,6 @@ import java.util.*;
 public class SortedEntries {
 
     public static void countFrequencyOfChar(String str) {
-
         ArrayList<Character> characters = new ArrayList<>();
 
         for (int i = 0; i < str.length(); i++) {
