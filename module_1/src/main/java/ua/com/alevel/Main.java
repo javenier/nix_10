@@ -1,7 +1,7 @@
 package ua.com.alevel;
 
-import ua.com.alevel.level1.task1.HorseMove;
-import ua.com.alevel.level1.task1.Triangle;
+import ua.com.alevel.level1.task2.HorseMove;
+import ua.com.alevel.level1.task3.Triangle;
 import ua.com.alevel.level1.task1.UniqueSymbols;
 
 import java.awt.*;

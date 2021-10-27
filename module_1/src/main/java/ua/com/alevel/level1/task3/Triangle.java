@@ -1,4 +1,4 @@
-package ua.com.alevel.level1.task1;
+package ua.com.alevel.level1.task3;
 
 import java.awt.*;
 

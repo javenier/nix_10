@@ -1,4 +1,4 @@
-package ua.com.alevel.level1.task1;
+package ua.com.alevel.level1.task2;
 
 public class HorseMove {
 
