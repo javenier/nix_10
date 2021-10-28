@@ -3,6 +3,8 @@ package ua.com.alevel;
 import ua.com.alevel.level1.task2.HorseMove;
 import ua.com.alevel.level1.task3.Triangle;
 import ua.com.alevel.level1.task1.UniqueSymbols;
+import ua.com.alevel.level2.task1.NestedParentheses;
+import ua.com.alevel.level2.task2.Tree;
 
 import java.awt.*;
 import java.util.Scanner;
@@ -44,10 +46,10 @@ public class Main {
                 String task = sc.nextLine();
                 switch(task){
                     case "1":
-                        System.out.println("level 2 task1");
+                        solveNestedParentheses();
                         break;
                     case "2":
-                        System.out.println("level 2 task2");
+                        solveTreeDepth();
                         break;
                     case "0":
                         break;
@@ -64,6 +66,28 @@ public class Main {
             }
 
         }
+    }
+
+    private void solveTreeDepth() {
+        System.out.println();
+        System.out.println("#Tree depth#");
+        Tree tree = new Tree();
+        tree.generateRandomTree();
+        tree.printTree();
+        System.out.println("The depth of the tree: " + Tree.getDepth(tree.getRootNode()));
+        System.out.println();
+    }
+
+    private void solveNestedParentheses() {
+        System.out.println();
+        System.out.println("#Nested parentheses#");
+        System.out.print("Enter a string: ");
+        String src = sc.nextLine();
+        if(NestedParentheses.isValidNestedParentheses(src))
+            System.out.println("The string is correct");
+        else
+            System.out.println("The string is not correct");
+        System.out.println();
     }
 
     private void solveHorseMove() {
@@ -88,6 +112,7 @@ public class Main {
             System.out.println("It's possible move");
         else
             System.out.println("It's impossible move");
+        System.out.println();
     }
 
     private void solveTriangle() {
@@ -119,6 +144,7 @@ public class Main {
             return;
         }
         System.out.println("Square of the triangle: " + tr.calcSquare());
+        System.out.println();
     }
 
     private void solveUniqueSymbols() {
@@ -127,5 +153,6 @@ public class Main {
         System.out.print("Enter symbols by space: ");
         String src = sc.nextLine();
         System.out.println("Count of unique numbers in string: " + UniqueSymbols.countUniqueSymbols(src));
+        System.out.println();
     }
 }
