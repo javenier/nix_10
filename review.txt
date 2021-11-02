@@ -2,3 +2,12 @@ hw_1 = 9
 hw_2 = 9
 
 делай реформат кода!!!
+
+hw_3 = 9
+
+    private DBUser() {
+        users = new User[0];
+        usersCount = 0;
+    } это зло - почему капасити 0???
+
+module_1 = 9
