@@ -44,15 +44,29 @@ public class DBStudent {
 
     public void delete(String id) {
         int index = -1;
-        for (int i = 0; i < students.length; i++) {
+        for (int i = 0; i < studentsCount; i++) {
             if (students[i].getId().equals(id)) {
                 index = i;
                 break;
             }
         }
-        if (index < 0 || students == null || index >= students.length) {
+        if (index < 0 || students == null || index >= studentsCount) {
             System.out.println("Student not found");
             return;
+        }
+        Student forDelete = students[index];
+        Course[] courses = forDelete.getCourses();
+        for (Course c : courses) {
+            if (c != null) {
+                Student[] courseStudents = c.getStudents();
+                for (Student s : courseStudents) {
+                    if (s != null) {
+                        if (s.getId().equals(id)) {
+                            c.deleteStudent(id);
+                        }
+                    }
+                }
+            }
         }
         Student[] temp = new Student[students.length - 1];
         for (int i = 0, k = 0; i < students.length; i++) {
@@ -62,6 +76,7 @@ public class DBStudent {
             temp[k++] = students[i];
         }
         students = Arrays.copyOf(temp, temp.length);
+        studentsCount--;
     }
 
     public Student findById(String id) {
@@ -80,7 +95,7 @@ public class DBStudent {
 
     private String generateId() {
         String id = UUID.randomUUID().toString();
-        for (int i = 0; i < students.length; i++) {
+        for (int i = 0; i < studentsCount; i++) {
             if (students[i].getId().equals(id))
                 return generateId();
         }

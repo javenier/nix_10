@@ -1,2 +1,2 @@
-call mvn clean install
-call java -jar .\target\hw_4_logs_and_test.jar
+call run_test.bat
+call run_life.bat

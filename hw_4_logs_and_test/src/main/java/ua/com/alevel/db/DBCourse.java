@@ -1,6 +1,7 @@
 package ua.com.alevel.db;
 
 import ua.com.alevel.entity.Course;
+import ua.com.alevel.entity.Student;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -43,15 +44,29 @@ public class DBCourse {
 
     public void delete(String id) {
         int index = -1;
-        for (int i = 0; i < courses.length; i++) {
+        for (int i = 0; i < coursesCount; i++) {
             if (courses[i].getId().equals(id)) {
                 index = i;
                 break;
             }
         }
-        if (index < 0 || courses == null || index >= courses.length) {
+        if (index < 0 || courses == null || index >= coursesCount) {
             System.out.println("Course not found");
             return;
+        }
+        Course forDelete = courses[index];
+        Student[] students = forDelete.getStudents();
+        for (Student s : students) {
+            if (s != null) {
+                Course[] studentCourses = s.getCourses();
+                for (Course c : studentCourses) {
+                    if (c != null) {
+                        if (c.getId().equals(id)) {
+                            s.deleteCourse(id);
+                        }
+                    }
+                }
+            }
         }
         Course[] temp = new Course[courses.length - 1];
         for (int i = 0, k = 0; i < courses.length; i++) {
@@ -61,10 +76,11 @@ public class DBCourse {
             temp[k++] = courses[i];
         }
         courses = Arrays.copyOf(temp, temp.length);
+        coursesCount--;
     }
 
     public Course findById(String id) {
-        for (int i = 0; i < courses.length; i++) {
+        for (int i = 0; i < coursesCount; i++) {
             if (courses[i].getId().equals(id)) {
                 return courses[i];
             }
@@ -79,7 +95,7 @@ public class DBCourse {
 
     private String generateId() {
         String id = UUID.randomUUID().toString();
-        for (int i = 0; i < courses.length; i++) {
+        for (int i = 0; i < coursesCount; i++) {
             if (courses[i].getId().equals(id))
                 return generateId();
         }
