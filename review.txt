@@ -11,3 +11,18 @@ hw_3 = 9
     } это зло - почему капасити 0???
 
 module_1 = 9
+
+hw_4 = 8
+ua/com/alevel/entity/Course.java:10
+ua/com/alevel/entity/Student.java:10
+
+ua/com/alevel/controller/StudentController.java:93
+ua/com/alevel/controller/StudentController.java:94
+
+ты тупо делаешь двойную работу)))
+у тебя одна логическая сущность курс имеет раздвоение личности)))
+она одновременно и в своей базе и в базе студентов))))
+
+мыслим табоицами, джава лишь инструмент)
+
+hw_5 = 9
