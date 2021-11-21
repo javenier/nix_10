@@ -28,6 +28,8 @@
         <module>hw_4_logs_and_test</module>
         <module>hw_5_collection</module>
         <module>mathSet</module>
+        <module>hw_6_exception</module>
+        <module>calendar</module>
     </modules>
     <packaging>pom</packaging>
 
