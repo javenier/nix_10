@@ -30,6 +30,7 @@
         <module>mathSet</module>
         <module>hw_6_exception</module>
         <module>calendar</module>
+        <module>module_2</module>
     </modules>
     <packaging>pom</packaging>
 
