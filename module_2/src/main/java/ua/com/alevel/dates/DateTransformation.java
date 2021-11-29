@@ -19,12 +19,12 @@ public class DateTransformation {
 
     private static Set<String> toFinalFormat(Set<String> set) {
         Set<String> result = new HashSet<>();
-        for(String s : set) {
+        for (String s : set) {
             String[] tokens;
             String date;
-            if(s.contains("/")) {
+            if (s.contains("/")) {
                 tokens = s.split("/");
-                if(tokens[0].length() == 4) {
+                if (tokens[0].length() == 4) {
                     date = tokens[0] + tokens[1] + tokens[2];
                 } else {
                     date = tokens[2] + tokens[1] + tokens[0];
@@ -40,8 +40,8 @@ public class DateTransformation {
 
     private static Set<String> filterValidDates(Set<String> set) {
         Set<String> filtered = new HashSet<>();
-        for(String s : set) {
-            if(isValidDate(s))
+        for (String s : set) {
+            if (isValidDate(s))
                 filtered.add(s);
         }
         return filtered;
@@ -49,9 +49,9 @@ public class DateTransformation {
 
     private static boolean isValidDate(String date) {
         String[] tokens;
-        if(date.contains("/")) {
+        if (date.contains("/")) {
             tokens = date.split("/");
-            if(tokens[0].length() == 4) {
+            if (tokens[0].length() == 4) {
                 return checkDaysAndMonths(tokens, 2, 1);
             } else {
                 return checkDaysAndMonths(tokens, 0, 1);
@@ -63,9 +63,9 @@ public class DateTransformation {
     }
 
     private static boolean checkDaysAndMonths(String tokens[], int indexDays, int indexMonth) {
-        if(Integer.parseInt(tokens[indexMonth]) < 1 || Integer.parseInt(tokens[indexMonth]) > 12)
+        if (Integer.parseInt(tokens[indexMonth]) < 1 || Integer.parseInt(tokens[indexMonth]) > 12)
             return false;
-        if(Integer.parseInt(tokens[indexDays]) < 1 || Integer.parseInt(tokens[indexDays]) > 31)
+        if (Integer.parseInt(tokens[indexDays]) < 1 || Integer.parseInt(tokens[indexDays]) > 31)
             return false;
         return true;
     }
@@ -74,7 +74,7 @@ public class DateTransformation {
         Set<String> dates = new HashSet<>();
         Pattern pattern = Pattern.compile(YEAR_MONTH_DAY_SLASH_REGEX + "|" + DAY_MONTH_YEAR_SLASH_REGEX + "|" + MONTH_DAY_YEAR_DASH_REGEX);
         Matcher matcher = pattern.matcher(input);
-        while(matcher.find()) {
+        while (matcher.find()) {
             dates.add(input.substring(matcher.start(), matcher.end()));
         }
         return dates;

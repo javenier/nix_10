@@ -15,7 +15,7 @@ public class UniqueNameFinder {
             if (entry.getValue() == 1)
                 return entry.getKey();
         }
-        return null;
+        throw new RuntimeException("String has not unique names");
     }
 
     private static Map<String, Integer> countFrequencyOfEntries(List<String> names) {
