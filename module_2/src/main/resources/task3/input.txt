@@ -22,6 +22,6 @@ lviv
 3 2
 4 1
 3
-kyiv lviv - 3
-chernihiv lviv - 2
-kharkiv odessa - 3
+kyiv lviv
+chernihiv lviv
+kharkiv odessa
