@@ -26,3 +26,6 @@ ua/com/alevel/controller/StudentController.java:94
 мыслим табоицами, джава лишь инструмент)
 
 hw_5 = 9
+hw_6 = 9
+
+module_2 = 9
