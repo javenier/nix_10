@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/data_table}">
+<head>
+    <meta charset="utf-8">
+    <title>Banks</title>
+</head>
+<body>
+
+<div layout:fragment="data_table_content">
+
+    <tr th:each="bank,iter : ${pageData.getItems()}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${bank.getName()}"></td>
+        <td th:text="${bank.getYearOfFoundation()}"></td>
+        <td>
+            <a th:href="@{'/clients?bankId=' + ${bank.getId()}}" th:text="${bank.getClientCount()}" type="button" class="btn btn-link">details</a>
+        </td>
+        <td th:text="${bank.getBankType().name()}"></td>
+        <td>
+            <a th:href="@{'/banks/details/' + ${bank.getId()}}" type="button" class="btn btn-primary btn-details">details</a>
+        </td>
+        <td>
+            <a th:href="@{'/banks/delete/' + ${bank.getId()}}" type="button" class="btn btn-danger btn-delete">delete</a>
+        </td>
+    </tr>
+
+</div>
+
+</body>
+</html>
