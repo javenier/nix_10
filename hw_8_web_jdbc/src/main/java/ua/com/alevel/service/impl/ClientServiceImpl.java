@@ -33,7 +33,6 @@ public class ClientServiceImpl implements ClientService {
             clientDao.update(entity);
     }
 
-    ////////??????????????????
     @Override
     public void delete(Long id) {
         clientDao.delete(id);

@@ -9,7 +9,7 @@ public interface BaseFacade<REQ extends RequestDto, RES extends ResponseDto> {
 
     void create(REQ req);
 
-    void update(REQ req, Long id);
+    void update(REQ req);
 
     void delete(Long id);
 

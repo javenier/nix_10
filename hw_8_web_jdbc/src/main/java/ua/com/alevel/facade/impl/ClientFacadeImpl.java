@@ -39,8 +39,8 @@ public class ClientFacadeImpl implements ClientFacade {
     }
 
     @Override
-    public void update(ClientRequestDto clientRequestDto, Long id) {
-        Client client = clientService.findById(id);
+    public void update(ClientRequestDto clientRequestDto) {
+        Client client = clientService.findById(clientRequestDto.getId());
         if (client != null) {
             client.setAge(clientRequestDto.getAge());
             client.setLastName(clientRequestDto.getLastName());

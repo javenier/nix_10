@@ -31,7 +31,6 @@ public class ClientDaoImpl implements ClientDao {
         this.jpaConfig = jpaConfig;
     }
 
-    //!!!
     @Override
     public void create(Client entity, Long bankId) {
         try(PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(CREATE_CLIENT_QUERY)) {
@@ -58,7 +57,7 @@ public class ClientDaoImpl implements ClientDao {
             preparedStatement.setString(1, entity.getFirstName());
             preparedStatement.setString(2, entity.getLastName());
             preparedStatement.setInt(3, entity.getAge());
-            preparedStatement.setTimestamp(4, new Timestamp(entity.getUpdated().getTime()));
+            preparedStatement.setTimestamp(4, new Timestamp(new Date().getTime()));
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

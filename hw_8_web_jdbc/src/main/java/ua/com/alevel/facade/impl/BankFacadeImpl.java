@@ -75,8 +75,8 @@ public class BankFacadeImpl implements BankFacade {
     }
 
     @Override
-    public void update(BankRequestDto bankRequestDto, Long id) {
-        Bank bank = bankService.findById(id);
+    public void update(BankRequestDto bankRequestDto) {
+        Bank bank = bankService.findById(bankRequestDto.getId());
         if(bank != null) {
             bank.setYearOfFoundation(bankRequestDto.getYearOfFoundation());
             bank.setBankType(bankRequestDto.getBankType());

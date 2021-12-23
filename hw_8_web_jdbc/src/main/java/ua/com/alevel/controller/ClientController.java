@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import ua.com.alevel.dto.PageData;
+import ua.com.alevel.dto.bank.BankRequestDto;
+import ua.com.alevel.dto.bank.BankResponseDto;
 import ua.com.alevel.dto.client.ClientRequestDto;
 import ua.com.alevel.dto.client.ClientResponseDto;
 import ua.com.alevel.facade.ClientFacade;
+import ua.com.alevel.type.BankType;
 
 
 @Controller
@@ -80,6 +83,22 @@ public class ClientController extends BaseController {
     @PostMapping("/new")
     public String createNewClient(@ModelAttribute("client") ClientRequestDto dto) {
         clientFacade.create(dto);
+        return "redirect:/clients";
+    }
+
+    @GetMapping("/edit")
+    public String redirectToEditPage(@RequestParam Long id, Model model) {
+        ClientResponseDto clientResponseDto = clientFacade.findById(id);
+        ClientRequestDto dto = new ClientRequestDto();
+        dto.setId(id);
+        model.addAttribute("clientName", clientResponseDto.getFirstName() + " " + clientResponseDto.getLastName());
+        model.addAttribute("client", dto);
+        return "pages/clients/clients_edit";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@ModelAttribute("client") ClientRequestDto client) {
+        clientFacade.update(client);
         return "redirect:/clients";
     }
 }

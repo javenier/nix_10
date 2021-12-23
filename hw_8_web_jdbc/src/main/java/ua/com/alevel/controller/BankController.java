@@ -12,6 +12,7 @@ import ua.com.alevel.dto.PageData;
 import ua.com.alevel.dto.bank.BankRequestDto;
 import ua.com.alevel.dto.bank.BankResponseDto;
 import ua.com.alevel.dto.client.ClientResponseDto;
+import ua.com.alevel.entity.Bank;
 import ua.com.alevel.facade.BankFacade;
 import ua.com.alevel.facade.ClientFacade;
 import ua.com.alevel.type.BankType;
@@ -103,6 +104,23 @@ public class BankController extends BaseController {
     @PostMapping("/link")
     public String link(@ModelAttribute("link") LinkRequestDto dto) {
         bankFacade.link(dto);
+        return "redirect:/banks";
+    }
+
+    @GetMapping("/edit")
+    public String redirectToEditPage(@RequestParam Long id, Model model) {
+        BankResponseDto resDto = bankFacade.findById(id);
+        BankRequestDto dto = new BankRequestDto();
+        dto.setId(id);
+        model.addAttribute("bankName", resDto.getName());
+        model.addAttribute("bank", dto);
+        model.addAttribute("types", BankType.values());
+        return "pages/banks/banks_edit";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@ModelAttribute("bank") BankRequestDto bank) {
+        bankFacade.update(bank);
         return "redirect:/banks";
     }
 }

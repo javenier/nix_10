@@ -90,7 +90,7 @@ public class BankDaoImpl implements BankDao {
         try(PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(UPDATE_BANK_QUERY + entity.getId())) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setInt(2, entity.getYearOfFoundation());
-            preparedStatement.setTimestamp(3, new Timestamp(entity.getUpdated().getTime()));
+            preparedStatement.setTimestamp(3, new Timestamp(new Date().getTime()));
             preparedStatement.setString(4, entity.getBankType().name());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -4,10 +4,19 @@ import ua.com.alevel.dto.RequestDto;
 
 public class ClientRequestDto extends RequestDto {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private Integer age;
     private Long bankId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

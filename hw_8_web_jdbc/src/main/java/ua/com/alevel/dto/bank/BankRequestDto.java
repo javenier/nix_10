@@ -5,9 +5,18 @@ import ua.com.alevel.type.BankType;
 
 public class BankRequestDto extends RequestDto {
 
+    private Long id;
     private String name;
     private Integer yearOfFoundation;
     private BankType bankType;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
