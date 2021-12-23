@@ -1,6 +1,6 @@
--- drop table banks if exists;
--- drop table clients if exists;
--- drop table bank_client if exists;
+drop table if exists banks ;
+drop table if exists clients ;
+drop table if exists bank_client ;
 
 create table banks
 (
