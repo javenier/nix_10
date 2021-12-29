@@ -98,12 +98,36 @@ public class BankController extends BaseController {
         model.addAttribute("client", dto);
         model.addAttribute("banks", banks);
         model.addAttribute("link", linkRequestDto);
+        model.addAttribute("buttonText", "Link");
+        model.addAttribute("pageTitle", "Link bank to client");
+        model.addAttribute("action", "/banks/link");
         return "pages/relation/link";
     }
 
     @PostMapping("/link")
     public String link(@ModelAttribute("link") LinkRequestDto dto) {
         bankFacade.link(dto);
+        return "redirect:/banks";
+    }
+
+    @GetMapping("/unlink")
+    public String redirectToUnlinkPage(Model model, @RequestParam Long clientId, WebRequest request) {
+        ClientResponseDto dto = clientFacade.findById(clientId);
+        List<BankResponseDto> banks = bankFacade.findAllByClientId(request, clientId).getItems();
+        LinkRequestDto linkRequestDto = new LinkRequestDto();
+        linkRequestDto.setClientId(clientId);
+        model.addAttribute("client", dto);
+        model.addAttribute("banks", banks);
+        model.addAttribute("link", linkRequestDto);
+        model.addAttribute("buttonText", "Unlink");
+        model.addAttribute("pageTitle", "Unlink client from bank");
+        model.addAttribute("action", "/banks/unlink");
+        return "pages/relation/link";
+    }
+
+    @PostMapping("/unlink")
+    public String unlink(@ModelAttribute("link") LinkRequestDto dto) {
+        bankFacade.unlink(dto);
         return "redirect:/banks";
     }
 

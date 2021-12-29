@@ -36,6 +36,11 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
+    public void unlink(Long bankId, Long clientId) {
+        bankDao.unlink(bankId, clientId);
+    }
+
+    @Override
     public void create(Bank entity) {
         bankDao.create(entity);
     }

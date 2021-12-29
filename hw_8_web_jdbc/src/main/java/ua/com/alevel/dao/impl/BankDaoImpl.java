@@ -28,6 +28,7 @@ public class BankDaoImpl implements BankDao {
     private static String FIND_BANK_BY_ID_QUERY = "select * from banks where id = ";
     private static String BANKS_COUNT_QUERY = "select count(*) as count from banks";
     private static String LINK_BANK_TO_CLIENT = "insert into bank_client values (?,?)";
+    private static String UNLINK_BANK_FROM_CLIENT = "delete from bank_client where bank_id = ? and client_id = ?";
 
     public BankDaoImpl(JpaConfig jpaConfig) {
         this.jpaConfig = jpaConfig;
@@ -63,6 +64,17 @@ public class BankDaoImpl implements BankDao {
     @Override
     public void link(Long bankId, Long clientId) {
         try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(LINK_BANK_TO_CLIENT)) {
+            preparedStatement.setLong(1, bankId);
+            preparedStatement.setLong(2, clientId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void unlink(Long bankId, Long clientId) {
+        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(UNLINK_BANK_FROM_CLIENT)) {
             preparedStatement.setLong(1, bankId);
             preparedStatement.setLong(2, clientId);
             preparedStatement.executeUpdate();
@@ -166,6 +178,7 @@ public class BankDaoImpl implements BankDao {
             throwables.printStackTrace();
         }
         return 0;
+
     }
 
     private BankResultSet convertResultSetToBank(ResultSet resultSet) throws SQLException {

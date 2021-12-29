@@ -66,6 +66,13 @@ public class BankFacadeImpl implements BankFacade {
     }
 
     @Override
+    public void unlink(LinkRequestDto dto) {
+        Long bankId = dto.getBankId();
+        Long clientId = dto.getClientId();
+        bankService.unlink(bankId, clientId);
+    }
+
+    @Override
     public void create(BankRequestDto bankRequestDto) {
         Bank bank = new Bank();
         bank.setBankType(bankRequestDto.getBankType());

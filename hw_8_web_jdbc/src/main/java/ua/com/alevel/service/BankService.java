@@ -13,4 +13,6 @@ public interface BankService extends BaseService<Bank> {
     DataTableResponse<Bank> findAllByClientId(DataTableRequest request, Long clientId);
 
     void link(Long bankId, Long clientId);
+
+    void unlink(Long bankId, Long clientId);
 }

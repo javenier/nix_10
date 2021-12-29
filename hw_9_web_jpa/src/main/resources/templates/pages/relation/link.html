@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title th:text="${pageTitle}"/>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4>Client</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Id</th>
+                            <td th:text="${client.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>First Name</th>
+                            <td th:text="${client.getFirstName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Last Name</th>
+                            <td th:text="${client.getLastName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Age</th>
+                            <td th:text="${client.getAge()}"></td>
+                        </tr>
+                    </table>
+
+                    <form action="#" th:action="${action}" th:object="${link}" method="post">
+                        <div class="form-group">
+                            <label for="bank">Select bank:</label>
+                            <select class="form-control" id="bank" th:field="*{bankId}">
+                                <option th:each="bank : ${banks}"
+                                        th:value="${bank.id}"
+                                        th:text="${bank.name}">
+                                </option>
+                            </select>
+                        </div>
+                        <input type="hidden" id="clientId" aria-describedby="clientId" th:value="${link.clientId}" th:field="*{clientId}">
+                        <button type="submit" class="btn btn-primary" th:text="${buttonText}"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

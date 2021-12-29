@@ -45,8 +45,9 @@
                         </tr>
                     </table>
                     <hr>
-                    <a th:href="@{'/banks/link?clientId=' + ${client.getId()}}" type="button" class="btn btn-primary mr-5">Link bank</a>
-                    <a th:href="@{'/clients/edit?id=' + ${client.getId()}}" type="button" class="btn btn-primary">Edit client</a>
+                    <a th:href="@{'/banks/link?clientId=' + ${client.getId()} + '&page=1&size=100'}" type="button" class="btn btn-primary btn-details mr-5">Link bank</a>
+                    <a th:href="@{'/banks/unlink?clientId=' + ${client.getId()}}" type="button" class="btn btn-primary btn-details mr-5">Unlink bank</a>
+                    <a th:href="@{'/clients/edit?id=' + ${client.getId()}}" type="button" class="btn btn-primary btn-details">Edit client</a>
                 </div>
             </div>
         </div>
