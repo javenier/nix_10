@@ -12,7 +12,6 @@ import ua.com.alevel.dto.PageData;
 import ua.com.alevel.dto.bank.BankRequestDto;
 import ua.com.alevel.dto.bank.BankResponseDto;
 import ua.com.alevel.dto.client.ClientResponseDto;
-import ua.com.alevel.entity.Client;
 import ua.com.alevel.facade.BankFacade;
 import ua.com.alevel.facade.ClientFacade;
 import ua.com.alevel.type.BankType;
@@ -27,11 +26,20 @@ public class BankController extends BaseController {
     private final BankFacade bankFacade;
     private final ClientFacade clientFacade;
 
-    private final HeaderName[] columnNames = new HeaderName[] {
+    private final HeaderName[] columnNamesForFindAll = new HeaderName[] {
             new HeaderName("#", null, null),
             new HeaderName("name", "name", "name"),
             new HeaderName("year", "yearOfFoundation", "year_of_foundation"),
             new HeaderName("client count", "clientCount", "clientCount"),
+            new HeaderName("bank type", "bankType", "bank_type"),
+            new HeaderName("details", null, null),
+            new HeaderName("delete", null, null)
+    };
+
+    private final HeaderName[] columnNamesForFindAllByClient = new HeaderName[] {
+            new HeaderName("#", null, null),
+            new HeaderName("name", "name", "name"),
+            new HeaderName("year", "yearOfFoundation", "year_of_foundation"),
             new HeaderName("bank type", "bankType", "bank_type"),
             new HeaderName("details", null, null),
             new HeaderName("delete", null, null)
@@ -47,12 +55,15 @@ public class BankController extends BaseController {
         PageData<BankResponseDto> response;
         if(clientId != null) {
             response = bankFacade.findAllByClientId(request, clientId);
+            initDataTable(response, columnNamesForFindAllByClient, model);
             model.addAttribute("createNew", "/banks/link?clientId=" + clientId);
+            model.addAttribute("findAll", false);
         } else {
             response = bankFacade.findAll(request);
+            initDataTable(response, columnNamesForFindAll, model);
             model.addAttribute("createNew", "/banks/new");
+            model.addAttribute("findAll", true);
         }
-        initDataTable(response, columnNames, model);
         model.addAttribute("createUrl", "/banks/all");
         model.addAttribute("cardHeader", "All Banks");
         return "pages/banks/banks_all";

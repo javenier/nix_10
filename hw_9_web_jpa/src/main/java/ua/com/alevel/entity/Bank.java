@@ -67,7 +67,7 @@ public class Bank extends BaseEntity {
     }
 
     public void removeClient(Client client) {
-        clients.remove(client);
-        client.getBanks().remove(this);
+        clients.removeIf(c -> (c.getId() == client.getId()));
+        client.getBanks().removeIf(b -> (b.getId() == this.getId()));
     }
 }
