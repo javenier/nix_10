@@ -15,6 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -64,19 +65,12 @@ public class ClientDaoImpl implements ClientDao {
         Map<Object, Object> otherParamMap = new HashMap<>();
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
 
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Client> criteriaQuery = criteriaBuilder.createQuery(Client.class);
-        Root<Client> from = criteriaQuery.from(Client.class);
-        if (request.getOrder().equals("desc")) {
-            criteriaQuery.orderBy(criteriaBuilder.desc(from.get(request.getSort())));
-        } else {
-            criteriaQuery.orderBy(criteriaBuilder.asc(from.get(request.getSort())));
-        }
-
-        List<Client> clients = entityManager.createQuery(criteriaQuery)
-                .setFirstResult(limit)
-                .setMaxResults(request.getPageSize())
-                .getResultList();
+        List<Client> clients = entityManager.createNativeQuery("select id, created, updated, first_name, last_name, age, count(*) as bankCount" +
+        " from clients join bank_client bc on clients.id = bc.client_id group by client_id order by " +
+                request.getSort() + " " +
+                request.getOrder() + " limit " +
+                limit + "," +
+                request.getPageSize(), Client.class).getResultList();
 
         DataTableResponse<Client> dataTableResponse = new DataTableResponse<>();
         dataTableResponse.setItems(clients);
@@ -99,6 +93,20 @@ public class ClientDaoImpl implements ClientDao {
 
     @Override
     public DataTableResponse<Client> findAllByBankId(DataTableRequest request, Long bankId) {
-        return null;
+        Map<Object, Object> otherParamMap = new HashMap<>();
+        int limit = (request.getCurrentPage() - 1) * request.getPageSize();
+
+        List<Client> clients = entityManager.createNativeQuery("select id, created, updated, first_name, last_name, age, count(*) as bankCount" +
+                " from clients join bank_client bc on clients.id = bc.client_id where bank_id = " +
+                bankId + " group by client_id order by " +
+                request.getSort() + " " +
+                request.getOrder() + " limit " +
+                limit + "," +
+                request.getPageSize(), Client.class).getResultList();
+
+        DataTableResponse<Client> dataTableResponse = new DataTableResponse<>();
+        dataTableResponse.setItems(clients);
+        dataTableResponse.setOtherParam(otherParamMap);
+        return dataTableResponse;
     }
 }

@@ -9,7 +9,7 @@ public class BankResponseDto extends ResponseDto {
     private String name;
     private Integer yearOfFoundation;
     private BankType bankType;
-    private Integer clientCount;
+    private Long clientCount;
 
     public BankResponseDto(Bank bank) {
         this.name = bank.getName();
@@ -44,11 +44,11 @@ public class BankResponseDto extends ResponseDto {
         this.bankType = bankType;
     }
 
-    public Integer getClientCount() {
+    public Long getClientCount() {
         return clientCount;
     }
 
-    public void setClientCount(Integer clientCount) {
+    public void setClientCount(Long clientCount) {
         this.clientCount = clientCount;
     }
 }

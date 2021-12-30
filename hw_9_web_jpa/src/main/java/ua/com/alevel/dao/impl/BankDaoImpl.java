@@ -5,14 +5,19 @@ import ua.com.alevel.dao.BankDao;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.entity.Bank;
+import ua.com.alevel.entity.Client;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +29,6 @@ public class BankDaoImpl implements BankDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private final ClientDaoImpl clientDao;
-
-    public BankDaoImpl(ClientDaoImpl clientDao) {
-        this.clientDao = clientDao;
-    }
-
     @Override
     public void create(Bank bank) {
         entityManager.persist(bank);
@@ -37,18 +36,36 @@ public class BankDaoImpl implements BankDao {
 
     @Override
     public DataTableResponse<Bank> findAllByClientId(DataTableRequest request, Long clientId) {
-        return null;
+        Map<Object, Object> otherParamMap = new HashMap<>();
+        int limit = (request.getCurrentPage() - 1) * request.getPageSize();
+
+        List<Bank> banks = entityManager.createNativeQuery("select id, created, updated, name, year_of_foundation, bank_type, count(bank_id) as clientCount " +
+                "from banks as bank left join bank_client as bc on bank.id = bc.bank_id where client_id = " + clientId +
+                " group by bank.id order by " +
+                request.getSort() + " " +
+                request.getOrder() + " limit " +
+                limit + "," +
+                request.getPageSize(), Bank.class).getResultList();
+
+        DataTableResponse<Bank> dataTableResponse = new DataTableResponse<>();
+        dataTableResponse.setItems(banks);
+        dataTableResponse.setOtherParam(otherParamMap);
+        return dataTableResponse;
     }
 
     @Override
-    public void link(Long bankId, Long clientId) {
+    public void link(Long bankId, Client client) {
         Bank bank = findById(bankId);
-        bank.addClient(clientDao.findById(clientId));
+        bank.addClient(client);
+        entityManager.merge(bank);
     }
 
+    //not work because findByClient
     @Override
-    public void unlink(Long bankId, Long clientId) {
-
+    public void unlink(Long bankId, Client client) {
+        Bank bank = findById(bankId);
+        bank.removeClient(client);
+        entityManager.merge(bank);
     }
 
     @Override
@@ -80,19 +97,13 @@ public class BankDaoImpl implements BankDao {
         Map<Object, Object> otherParamMap = new HashMap<>();
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
 
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Bank> criteriaQuery = criteriaBuilder.createQuery(Bank.class);
-        Root<Bank> from = criteriaQuery.from(Bank.class);
-        if (request.getOrder().equals("desc")) {
-            criteriaQuery.orderBy(criteriaBuilder.desc(from.get(request.getSort())));
-        } else {
-            criteriaQuery.orderBy(criteriaBuilder.asc(from.get(request.getSort())));
-        }
-
-        List<Bank> banks = entityManager.createQuery(criteriaQuery)
-                .setFirstResult(limit)
-                .setMaxResults(request.getPageSize())
-                .getResultList();
+        List<Bank> banks = entityManager.createNativeQuery("select id, created, updated, name, year_of_foundation, bank_type, count(bank_id) as clientCount " +
+                "from banks as bank left join bank_client as bc on bank.id = bc.bank_id" +
+                " group by bank.id order by " +
+                request.getSort() + " " +
+                request.getOrder() + " limit " +
+                limit + "," +
+                request.getPageSize(), Bank.class).getResultList();
 
         DataTableResponse<Bank> dataTableResponse = new DataTableResponse<>();
         dataTableResponse.setItems(banks);

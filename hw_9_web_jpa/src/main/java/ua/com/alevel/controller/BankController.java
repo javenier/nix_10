@@ -12,6 +12,7 @@ import ua.com.alevel.dto.PageData;
 import ua.com.alevel.dto.bank.BankRequestDto;
 import ua.com.alevel.dto.bank.BankResponseDto;
 import ua.com.alevel.dto.client.ClientResponseDto;
+import ua.com.alevel.entity.Client;
 import ua.com.alevel.facade.BankFacade;
 import ua.com.alevel.facade.ClientFacade;
 import ua.com.alevel.type.BankType;

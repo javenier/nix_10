@@ -7,6 +7,7 @@ import ua.com.alevel.dao.ClientDao;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.entity.Bank;
+import ua.com.alevel.entity.Client;
 import ua.com.alevel.service.BankService;
 
 @Service
@@ -30,12 +31,14 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public void link(Long bankId, Long clientId) {
-        bankDao.link(bankId, clientId);
+        Client client = clientDao.findById(clientId);
+        bankDao.link(bankId, client);
     }
 
     @Override
     public void unlink(Long bankId, Long clientId) {
-        bankDao.unlink(bankId, clientId);
+        Client client = clientDao.findById(clientId);
+        bankDao.unlink(bankId, client);
     }
 
     @Override
@@ -49,7 +52,6 @@ public class BankServiceImpl implements BankService {
             bankDao.update(entity);
     }
 
-    ////////////??????
     @Override
     public void delete(Long id) {
         if(bankDao.existById(id)) {

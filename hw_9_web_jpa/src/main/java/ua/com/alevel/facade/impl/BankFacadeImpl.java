@@ -41,7 +41,7 @@ public class BankFacadeImpl implements BankFacade {
         List<BankResponseDto> banks = dataTableResponse.getItems().
                 stream().
                 map(BankResponseDto::new).
-                peek(bankResponseDto -> bankResponseDto.setClientCount((Integer) dataTableResponse.
+                peek(bankResponseDto -> bankResponseDto.setClientCount((Long) dataTableResponse.
                         getOtherParam().get(bankResponseDto.getId()))).
                 collect(Collectors.toList());
 
@@ -114,7 +114,7 @@ public class BankFacadeImpl implements BankFacade {
         List<BankResponseDto> banks = dataTableResponse.getItems().
                 stream().
                 map(BankResponseDto::new).
-                peek(bankResponseDto -> bankResponseDto.setClientCount((Integer) dataTableResponse.
+                peek(bankResponseDto -> bankResponseDto.setClientCount((Long) dataTableResponse.
                         getOtherParam().get(bankResponseDto.getId()))).
                 collect(Collectors.toList());
 
