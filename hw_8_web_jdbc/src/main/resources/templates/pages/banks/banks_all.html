@@ -15,7 +15,7 @@
         <td th:text="${iter.count}"></td>
         <td th:text="${bank.getName()}"></td>
         <td th:text="${bank.getYearOfFoundation()}"></td>
-        <td>
+        <td th:if="${findAll}">
             <a th:href="@{'/clients?bankId=' + ${bank.getId()}}" th:text="${bank.getClientCount()}" type="button" class="btn btn-link">details</a>
         </td>
         <td th:text="${bank.getBankType().name()}"></td>

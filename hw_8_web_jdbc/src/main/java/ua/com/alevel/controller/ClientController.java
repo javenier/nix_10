@@ -18,11 +18,20 @@ public class ClientController extends BaseController {
 
     private final ClientFacade clientFacade;
 
-    private final HeaderName[] columnNames = new HeaderName[] {
+    private final HeaderName[] columnNamesFindAll = new HeaderName[] {
             new HeaderName("#", null, null),
             new HeaderName("first name", "firstName", "first_name"),
             new HeaderName("last name", "lastName", "last_name"),
             new HeaderName("bank count", "bankCount", "bankCount"),
+            new HeaderName("age", "age", "age"),
+            new HeaderName("details", null, null),
+            new HeaderName("delete", null, null)
+    };
+
+    private final HeaderName[] columnNamesFindAllByBank = new HeaderName[] {
+            new HeaderName("#", null, null),
+            new HeaderName("first name", "firstName", "first_name"),
+            new HeaderName("last name", "lastName", "last_name"),
             new HeaderName("age", "age", "age"),
             new HeaderName("details", null, null),
             new HeaderName("delete", null, null)
@@ -38,12 +47,15 @@ public class ClientController extends BaseController {
         boolean buttonVisible;
         if(bankId != null) {
             response = clientFacade.findAllByBankId(request, bankId);
+            initDataTable(response, columnNamesFindAllByBank, model);
             buttonVisible = true;
+            model.addAttribute("findAll", false);
         } else {
             response = clientFacade.findAll(request);
+            initDataTable(response, columnNamesFindAll, model);
             buttonVisible = false;
+            model.addAttribute("findAll", true);
         }
-        initDataTable(response, columnNames, model);
         model.addAttribute("buttonVisible", buttonVisible);
         model.addAttribute("createUrl", "/clients/all");
         model.addAttribute("createNew", "/clients/new?bankId=" + bankId);
