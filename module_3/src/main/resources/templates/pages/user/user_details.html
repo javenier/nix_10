@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>User details</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    User Details
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Id</th>
+                            <td th:text="${user.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>First name</th>
+                            <td th:text="${user.getFirstName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Last name</th>
+                            <td th:text="${user.getLastName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Age</th>
+                            <td th:text="${user.getAge()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Created</th>
+                            <td th:text="${#calendars.format(user.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <div>
+                        <a th:href="@{'/users/edit?id=' + ${user.getId()}}"
+                           type="button"
+                           class="btn btn-primary mr-5 btn-details">Edit</a>
+                        <a th:href="@{'/accounts/new?userId=' + ${user.getId()}}"
+                           type="button"
+                           class="btn btn-primary mr-5 btn-details">New account</a>
+                        <a th:href="@{'/accounts?userId=' + ${user.getId()}}"
+                           type="button"
+                           class="btn btn-primary mr-5 btn-details">Show all accounts</a>
+                        <a th:href="@{'/transactions?userId=' + ${user.getId()}}"
+                           type="button"
+                           class="btn btn-primary btn-details">Show all transactions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

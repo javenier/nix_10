@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Categories</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    All categories
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Associate</th>
+                            <th>Delete</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="category,iter : ${categories}">
+                            <td th:text="${iter.count}"></td>
+                            <td th:text="${category.getName()}"></td>
+                            <td th:text="${category.getAssociate()}"></td>
+                            <td>
+                                <a th:href="@{'/categories/delete/' + ${category.getId()}}" type="button" class="btn btn-danger btn-delete">Delete</a>
+                            </td>
+                            <td>
+                                <a th:href="@{'/categories/' + ${category.getId()}}"
+                                   type="button"
+                                   class="btn btn-link">Details</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <a th:href="@{'/categories/new'}"
+                       type="button"
+                       class="btn btn-primary btn-details">New category</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

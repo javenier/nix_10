@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="utf-8">
+  <title>Edit account</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card mt-2">
+        <div class="card-header">
+          <h4>Edit account</h4>
+        </div>
+        <div class="card-body">
+          <form action="#" th:action="@{/accounts/edit}" th:object="${account}" method="post">
+            <div class="form-group">
+              <label for="type">Choose new type</label>
+              <select class="form-control" id="type" th:field="*{accountType}">
+                <option th:each="type : ${types}"
+                        th:value="${type}"
+                        th:text="${type}">
+                </option>
+              </select>
+            </div>
+            <input type="hidden" id="id" aria-describedby="id" th:value="${account.id}" th:field="*{id}">
+            <button type="submit" class="btn btn-primary btn-details">Edit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

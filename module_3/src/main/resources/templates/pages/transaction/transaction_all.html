@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Transactions</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    All transactions
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Amount</th>
+                            <th>Created</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="transaction,iter : ${transactions}">
+                            <td th:text="${iter.count}"></td>
+                            <td th:text="${transaction.getAmount()}"></td>
+                            <td th:text="${#calendars.format(transaction.getCreated(),'dd MMMM yyyy')}"></td>
+                            <td>
+                                <a th:href="@{'/transactions/' + ${transaction.getId()}}"
+                                   type="button"
+                                   class="btn btn-link">Details</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer" th:if="${statement}">
+                    Account statement has been exported to .csv!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

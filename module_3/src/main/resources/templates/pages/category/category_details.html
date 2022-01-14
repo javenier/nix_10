@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Category details</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Category details
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Id</th>
+                            <td th:text="${category.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td th:text="${category.getName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Associate</th>
+                            <td th:text="${category.getAssociate()}"></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <div>
+                        <a th:href="@{'/categories/edit?id=' + ${category.getId()}}"
+                           type="button"
+                           class="btn btn-primary mr-5 btn-details">Edit</a>
+                        <a th:href="@{'/transactions?categoryId=' + ${category.getId()}}"
+                           type="button"
+                           class="btn btn-primary mr-5 btn-details">Show all transactions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

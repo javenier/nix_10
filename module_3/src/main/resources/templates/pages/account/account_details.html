@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Account details</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Account details
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Id</th>
+                            <td th:text="${account.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>User id</th>
+                            <td th:text="${account.getUserId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Account type</th>
+                            <td th:text="${account.getAccountType().name()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Balance</th>
+                            <td th:text="${account.getBalance()}"></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <div>
+                        <a th:href="@{'/accounts/edit?id=' + ${account.getId()}}"
+                           type="button"
+                           class="btn btn-primary mr-5 btn-details">Edit</a>
+                        <a th:href="@{'/transactions/new?accountId=' + ${account.getId()}}"
+                           type="button"
+                           class="btn btn-primary mr-5 btn-details">New transaction</a>
+                        <a th:href="@{'/transactions?accountId=' + ${account.getId()}}"
+                           type="button"
+                           class="btn btn-primary mr-5 btn-details">Show all transactions</a>
+                        <a th:href="@{'/transactions?accountId=' + ${account.getId()} + '&statement=true'}"
+                           type="button"
+                           class="btn btn-primary btn-details">Account statement</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

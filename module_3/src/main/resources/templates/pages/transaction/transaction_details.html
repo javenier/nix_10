@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Transaction details</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Transaction details
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Id</th>
+                            <td th:text="${transaction.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>User id</th>
+                            <td th:text="${transaction.getUserId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Account id</th>
+                            <td th:text="${transaction.getAccountId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Amount</th>
+                            <td th:text="${transaction.getAmount()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Created</th>
+                            <td th:text="${#calendars.format(transaction.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Category</th>
+                            <td th:text="${transaction.getCategoryName()}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

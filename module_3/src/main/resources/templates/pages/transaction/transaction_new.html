@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>New transaction</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4>New transaction</h4>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{/transactions/new}" th:object="${transaction}" method="post">
+                        <div class="form-group">
+                            <label for="category">Choose category</label>
+                            <select class="form-control" id="category" th:field="*{categoryId}">
+                                <option th:each="c : ${categories}"
+                                        th:value="${c.getId()}"
+                                        th:text="${c.getName()}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input type="text" class="form-control" id="amount" aria-describedby="amount" placeholder="Enter amount" th:field="*{amount}">
+                        </div>
+                        <input type="hidden" id="accountId" aria-describedby="accountId" th:value="${transaction.getAccountId()}" th:field="*{accountId}">
+                        <button type="submit" class="btn btn-primary btn-details">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
