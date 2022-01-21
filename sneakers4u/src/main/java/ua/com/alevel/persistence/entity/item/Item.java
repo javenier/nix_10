@@ -55,4 +55,28 @@ public abstract class Item extends BaseEntity {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Item item = (Item) o;
+
+        if (price != null ? !price.equals(item.price) : item.price != null) return false;
+        if (description != null ? !description.equals(item.description) : item.description != null) return false;
+        if (imageUrl != null ? !imageUrl.equals(item.imageUrl) : item.imageUrl != null) return false;
+        return quantity != null ? quantity.equals(item.quantity) : item.quantity == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
+        result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
+        return result;
+    }
 }

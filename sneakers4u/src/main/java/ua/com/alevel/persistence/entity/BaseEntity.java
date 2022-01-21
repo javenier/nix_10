@@ -8,13 +8,13 @@ public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    Date created;
+    private Date created;
 
     @Temporal(TemporalType.TIMESTAMP)
-    Date updated;
+    private Date updated;
 
     public BaseEntity() {
         this.created = new Date();
@@ -48,5 +48,25 @@ public abstract class BaseEntity {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BaseEntity that = (BaseEntity) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (created != null ? !created.equals(that.created) : that.created != null) return false;
+        return updated != null ? updated.equals(that.updated) : that.updated == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (created != null ? created.hashCode() : 0);
+        result = 31 * result + (updated != null ? updated.hashCode() : 0);
+        return result;
     }
 }

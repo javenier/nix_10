@@ -1,14 +1,15 @@
 package ua.com.alevel.persistence.repository.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.item.attributes.Brand;
 import ua.com.alevel.persistence.repository.custom.BrandCustomRepository;
+import ua.com.alevel.persistence.repository.custom.SneakerCustomRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.*;
@@ -19,6 +20,12 @@ public class BrandCustomRepositoryImpl implements BrandCustomRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    private final SneakerCustomRepository sneakerCustomRepository;
+
+    public BrandCustomRepositoryImpl(SneakerCustomRepository sneakerCustomRepository) {
+        this.sneakerCustomRepository = sneakerCustomRepository;
+    }
 
     @Override
     public DataTableResponse<Brand> findAll(DataTableRequest request) {
@@ -45,6 +52,25 @@ public class BrandCustomRepositoryImpl implements BrandCustomRepository {
 
     @Override
     public void deleteById(Long id) {
+        sneakerCustomRepository.deleteByBrandId(id);
+//        List<Long> modelIds =  entityManager.
+//                createQuery("select m.id from Model m where m.brand.id = :id").
+//                setParameter("id", id).
+//                getResultList();
+//
+//        if (CollectionUtils.isNotEmpty(modelIds)) {
+//            List<Long> sneakerIds = entityManager.
+//                    createQuery("select s.id from Sneaker s where s.model.id in :modelIds").
+//                    setParameter("modelIds", id).
+//                    getResultList();
+//            if (CollectionUtils.isNotEmpty(sneakerIds)) {
+//                entityManager.
+//                        createQuery("delete from Sneaker s where s.id in :sneakerIds").
+//                        setParameter("sneakerIds", id).
+//                        executeUpdate();
+//            }
+//        }
+
         entityManager.
                 createQuery("delete from Brand b where b.id = :id").
                 setParameter("id", id).

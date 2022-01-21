@@ -15,7 +15,7 @@ public class Brand extends BaseEntity {
 
     private String imageUrl;
 
-    @OneToMany(mappedBy = "brand", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
     private Set<Model> models;
 
     public Brand() {
@@ -45,5 +45,27 @@ public class Brand extends BaseEntity {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Brand brand = (Brand) o;
+
+        if (name != null ? !name.equals(brand.name) : brand.name != null) return false;
+        if (imageUrl != null ? !imageUrl.equals(brand.imageUrl) : brand.imageUrl != null) return false;
+        return models != null ? models.equals(brand.models) : brand.models == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+//        result = 31 * result + (name != null ? name.hashCode() : 0);
+//        result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
+//        result = 31 * result + (models != null ? models.hashCode() : 0);
+        return result;
     }
 }

@@ -21,10 +21,10 @@ public class Sneaker extends Item {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Model model;
 
-    @ManyToMany(mappedBy = "sneakers", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToMany(mappedBy = "sneakers", cascade = CascadeType.ALL)
     private Set<Order> orders;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "sneaker_size", joinColumns = @JoinColumn(name = "sneaker_id"),
             inverseJoinColumns = @JoinColumn(name = "size_id"))
     private Set<Size> sizes;
@@ -90,5 +90,31 @@ public class Sneaker extends Item {
     public void removeSize(Size size) {
         sizes.removeIf(s -> (s.getId() == size.getId()));
         size.getSneakers().removeIf(s -> (s.getId() == this.getId()));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Sneaker sneaker = (Sneaker) o;
+
+        if (model != null ? !model.equals(sneaker.model) : sneaker.model != null) return false;
+        if (orders != null ? !orders.equals(sneaker.orders) : sneaker.orders != null) return false;
+        if (sizes != null ? !sizes.equals(sneaker.sizes) : sneaker.sizes != null) return false;
+        if (sneakerGender != sneaker.sneakerGender) return false;
+        return versionOfModel != null ? versionOfModel.equals(sneaker.versionOfModel) : sneaker.versionOfModel == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+//        result = 31 * result + (model != null ? model.hashCode() : 0);
+//        result = 31 * result + (orders != null ? orders.hashCode() : 0);
+//        result = 31 * result + (sizes != null ? sizes.hashCode() : 0);
+//        result = 31 * result + (sneakerGender != null ? sneakerGender.hashCode() : 0);
+//        result = 31 * result + (versionOfModel != null ? versionOfModel.hashCode() : 0);
+        return result;
     }
 }

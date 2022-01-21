@@ -15,7 +15,7 @@ public class Model extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "model", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
     private Set<Sneaker> sneakers;
 
     @ManyToOne
@@ -50,5 +50,27 @@ public class Model extends BaseEntity {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Model model = (Model) o;
+
+        if (name != null ? !name.equals(model.name) : model.name != null) return false;
+        if (sneakers != null ? !sneakers.equals(model.sneakers) : model.sneakers != null) return false;
+        return brand != null ? brand.equals(model.brand) : model.brand == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+//        result = 31 * result + (name != null ? name.hashCode() : 0);
+//        result = 31 * result + (sneakers != null ? sneakers.hashCode() : 0);
+//        result = 31 * result + (brand != null ? brand.hashCode() : 0);
+        return result;
     }
 }

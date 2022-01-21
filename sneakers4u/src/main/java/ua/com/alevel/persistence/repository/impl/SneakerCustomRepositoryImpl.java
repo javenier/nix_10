@@ -1,6 +1,8 @@
 package ua.com.alevel.persistence.repository.impl;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.item.Sneaker;
@@ -11,13 +13,11 @@ import ua.com.alevel.persistence.type.Gender;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.*;
 
 @Service
-@Transactional
 public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
 
     private final BrandRepository brandRepository;
@@ -32,6 +32,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         entityManager.
                 createQuery("delete from Sneaker s where s.id = :id").
@@ -40,6 +41,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
     }
 
     @Override
+    @Transactional
     public DataTableResponse<Sneaker> findAll(DataTableRequest request) {
         List<Sneaker> sneakers = new ArrayList<>();
         Map<Object, Object> otherParamMap = new HashMap<>();
@@ -88,6 +90,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
     }
 
     @Override
+    @Transactional
     public DataTableResponse<Sneaker> findAllByBrandId(DataTableRequest request, Long brandId) {
         List<Sneaker> sneakers = new ArrayList<>();
         Map<Object, Object> otherParamMap = new HashMap<>();
@@ -113,6 +116,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
     }
 
     @Override
+    @Transactional
     public DataTableResponse<Sneaker> findAllByModelId(DataTableRequest request, Long modelId) {
         List<Sneaker> sneakers = new ArrayList<>();
         Map<Object, Object> otherParamMap = new HashMap<>();
@@ -137,6 +141,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
     }
 
     @Override
+    @Transactional
     public DataTableResponse<Sneaker> findAllByOrderId(DataTableRequest request, Long orderId) {
         List<Sneaker> sneakers = new ArrayList<>();
         Map<Object, Object> otherParamMap = new HashMap<>();
@@ -163,6 +168,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
     }
 
     @Override
+    @Transactional
     public DataTableResponse<Sneaker> findAllByGender(DataTableRequest request, String gender) {
         List<Sneaker> sneakers = new ArrayList<>();
         Map<Object, Object> otherParamMap = new HashMap<>();
@@ -184,5 +190,36 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
         dataTableResponse.setItems(sneakers);
         dataTableResponse.setOtherParam(otherParamMap);
         return dataTableResponse;
+    }
+
+    @Override
+    @Transactional
+    public void deleteByModelIds(List<Long> ids) {
+        delete(ids);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByBrandId(Long id) {
+        List<Long> modelIds =  entityManager.
+                createQuery("select m.id from Model m where m.brand.id = :id").
+                setParameter("id", id).
+                getResultList();
+        delete(modelIds);
+    }
+
+    private void delete(List<Long> modelIds) {
+        if (CollectionUtils.isNotEmpty(modelIds)) {
+            List<Long> sneakerIds = entityManager.
+                    createQuery("select s.id from Sneaker s where s.model.id in :modelIds").
+                    setParameter("modelIds", modelIds).
+                    getResultList();
+            if (CollectionUtils.isNotEmpty(sneakerIds)) {
+                entityManager.
+                        createQuery("delete from Sneaker s where s.id in :sneakerIds").
+                        setParameter("sneakerIds", sneakerIds).
+                        executeUpdate();
+            }
+        }
     }
 }

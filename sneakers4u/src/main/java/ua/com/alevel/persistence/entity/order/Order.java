@@ -22,7 +22,7 @@ public class Order extends BaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinTable(name = "order_sneaker", joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "sneaker_id"))
     private Set<Sneaker> sneakers;
@@ -87,5 +87,33 @@ public class Order extends BaseEntity {
 
     public void setPostOffice(Integer postOffice) {
         this.postOffice = postOffice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Order order = (Order) o;
+
+        if (totalPrice != null ? !totalPrice.equals(order.totalPrice) : order.totalPrice != null) return false;
+        if (client != null ? !client.equals(order.client) : order.client != null) return false;
+        if (sneakers != null ? !sneakers.equals(order.sneakers) : order.sneakers != null) return false;
+        if (comment != null ? !comment.equals(order.comment) : order.comment != null) return false;
+        if (address != null ? !address.equals(order.address) : order.address != null) return false;
+        return postOffice != null ? postOffice.equals(order.postOffice) : order.postOffice == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (totalPrice != null ? totalPrice.hashCode() : 0);
+        result = 31 * result + (client != null ? client.hashCode() : 0);
+        result = 31 * result + (sneakers != null ? sneakers.hashCode() : 0);
+        result = 31 * result + (comment != null ? comment.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (postOffice != null ? postOffice.hashCode() : 0);
+        return result;
     }
 }
