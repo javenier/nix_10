@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row mt-7">
+            <div class="col-12">
+                <div class="card mt-5">
+                    <h5 class="card-header">Your profile</h5>
+                    <div class="card-body">
+                        <form action="#" th:action="@{/profile}" th:object="${requestDto}" method="post">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email" aria-describedby="email" th:value="${client.getEmail()}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="firstName">First name</label>
+                                <input type="text" class="form-control" id="firstName" aria-describedby="firstName" placeholder="Enter your first name" th:field="*{firstName}">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last name</label>
+                                <input type="text" class="form-control" id="lastName" aria-describedby="lastName" placeholder="Enter your last name" th:field="*{lastName}">
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="text" class="form-control" id="age" aria-describedby="age" placeholder="Enter your age" th:field="*{age}">
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select class="form-control" id="gender" th:field="*{gender}">
+                                    <option th:each="gender : ${genders}"
+                                            th:value="${gender}"
+                                            th:text="${gender}">
+                                    </option>
+                                </select>
+                            </div>
+                            <input type="hidden" id="id" aria-describedby="id" th:value="${requestDto.id}" th:field="*{id}">
+                            <button type="submit" class="btn btn-outline-secondary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

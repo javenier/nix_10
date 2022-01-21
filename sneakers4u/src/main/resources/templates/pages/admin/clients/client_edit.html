@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout_admin}">
+<head>
+    <meta charset="utf-8">
+    <title>Edit client</title>
+</head>
+<body>
+
+<div layout:fragment="content_admin">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4 th:text="'Edit user ' + ${clientEmail}"/>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{/admin/clients/edit}" th:object="${client}" method="post">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="text" class="form-control" id="age" aria-describedby="age" placeholder="Enter new age" th:field="*{age}">
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">First name</label>
+                            <input type="text" class="form-control" id="firstName" aria-describedby="firstName" placeholder="Enter new first name" th:field="*{firstName}">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last name</label>
+                            <input type="text" class="form-control" id="lastName" aria-describedby="lastName" placeholder="Enter new last name" th:field="*{lastName}">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select class="form-control" id="gender" th:field="*{gender}">
+                                <option th:each="gender : ${genders}"
+                                        th:value="${gender.name()}"
+                                        th:text="${gender.name()}">
+                                </option>
+                            </select>
+                        </div>
+                        <input type="hidden" id="id" aria-describedby="id" th:value="${client.id}" th:field="*{id}">
+                        <button type="submit" class="btn btn-primary btn-details">Edit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

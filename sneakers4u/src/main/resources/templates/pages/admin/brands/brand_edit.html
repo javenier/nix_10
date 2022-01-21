@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout_admin}">
+<head>
+    <meta charset="utf-8">
+    <title>Edit brand</title>
+</head>
+<body>
+
+<div layout:fragment="content_admin">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4 th:text="'Edit ' + ${brandName}"/>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{/admin/brands/edit}" th:object="${brand}" method="post">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" aria-describedby="name" placeholder="Enter new name" th:field="*{name}">
+                        </div>
+                        <div class="form-group">
+                            <label for="imageUrl">Image URL</label>
+                            <input type="text" class="form-control" id="imageUrl" aria-describedby="imageUrl" placeholder="Enter new image URL" th:field="*{imageUrl}">
+                        </div>
+                        <input type="hidden" id="id" aria-describedby="id" th:value="${brand.id}" th:field="*{id}">
+                        <button type="submit" class="btn btn-primary btn-details">Edit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

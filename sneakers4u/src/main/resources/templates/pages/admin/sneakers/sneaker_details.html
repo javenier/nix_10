@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout_admin}">
+<head>
+    <meta charset="utf-8">
+    <title>Sneaker details</title>
+</head>
+<body>
+
+<div layout:fragment="content_admin">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Sneaker details
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>id</th>
+                            <td th:text="${sneaker.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>created</th>
+                            <td th:text="${#calendars.format(sneaker.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>updated</th>
+                            <td th:text="${#calendars.format(sneaker.getUpdated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>brand</th>
+                            <td th:text="${sneaker.getBrand()}"></td>
+                        </tr>
+                        <tr>
+                            <th>model</th>
+                            <td th:text="${sneaker.getModel()}"></td>
+                        </tr>
+                        <tr>
+                            <th>version of model</th>
+                            <td th:text="${sneaker.getVersionOfModel()}"></td>
+                        </tr>
+                        <tr>
+                            <th>price</th>
+                            <td th:text="${sneaker.getPrice()}"></td>
+                        </tr>
+                        <tr>
+                            <th>quantity</th>
+                            <td th:text="${sneaker.getQuantity()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Sneaker gender</th>
+                            <td th:text="${sneaker.getSneakerGender()}"></td>
+                        </tr>
+                        <tr>
+                            <th>description</th>
+                            <td th:text="${sneaker.getDescription()}"></td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <a th:href="@{'/admin/sizes?sneakerId=' + ${sneaker.getId()}}" type="button"
+                       class="btn btn-primary btn-details mr-5">Show all sizes</a>
+                    <a th:href="@{'/admin/sizes/link?sneakerId=' + ${sneaker.getId()}}" type="button"
+                       class="btn btn-primary btn-details mr-5">Link size</a>
+                    <a th:href="@{'/admin/sizes/unlink?sneakerId=' + ${sneaker.getId()}}" type="button"
+                       class="btn btn-primary btn-details mr-5">Unlink size</a>
+                    <a th:href="@{'/admin/sneakers/edit?id=' + ${sneaker.getId()}}" type="button"
+                       class="btn btn-primary btn-details">Edit sneaker</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

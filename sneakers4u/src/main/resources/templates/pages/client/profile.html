@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="card">
+                    <h5 class="card-header">Your profile</h5>
+                    <div class="card-body">
+                        <form action="#">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email" aria-describedby="email" th:value="${client.getEmail()}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="firstName">First name</label>
+                                <input type="text" class="form-control" id="firstName" aria-describedby="firstName" th:value="${client.getFirstName()}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last name</label>
+                                <input type="text" class="form-control" id="lastName" aria-describedby="lastName" th:value="${client.getLastName()}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="text" class="form-control" id="age" aria-describedby="age" th:value="${client.getAge()}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <input type="text" class="form-control" id="gender" aria-describedby="gender" th:value="${client.getGender()}" readonly>
+                            </div>
+                            <a class="btn btn-outline-dark" th:href="'/profile?update=true'" role="button">Edit account</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

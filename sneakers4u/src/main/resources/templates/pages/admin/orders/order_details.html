@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout_admin}">
+<head>
+  <meta charset="utf-8">
+  <title>Order details</title>
+</head>
+<body>
+
+<div layout:fragment="content_admin">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-2 mt-2">
+        <div class="card-header">
+          Order details
+        </div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <tr>
+              <th>id</th>
+              <td th:text="${order.getId()}"></td>
+            </tr>
+            <tr>
+              <th>created</th>
+              <td th:text="${#calendars.format(order.getCreated(),'dd MMMM yyyy')}"></td>
+            </tr>
+            <tr>
+              <th>updated</th>
+              <td th:text="${#calendars.format(order.getUpdated(),'dd MMMM yyyy')}"></td>
+            </tr>
+            <tr>
+              <th>client id</th>
+              <td th:text="${order.getClientId()}"></td>
+            </tr>
+            <tr>
+              <th>total price</th>
+              <td th:text="${order.getTotalPrice()}"></td>
+            </tr>
+            <tr>
+              <th>address</th>
+              <td th:text="${order.getAddress()}"></td>
+            </tr>
+            <tr>
+              <th>post office</th>
+              <td th:text="${order.getPostOffice()}"></td>
+            </tr>
+            <tr>
+              <th>comment</th>
+              <td th:text="${order.getComment()}"></td>
+            </tr>
+          </table>
+          <hr>
+          <a th:href="@{'/admin/sneakers?orderId=' + ${order.getId()}}" type="button" class="btn btn-primary btn-details mr-5">Show all order items</a>
+          <a th:href="@{'/admin/orders/edit?id=' + ${order.getId()}}" type="button" class="btn btn-primary btn-details">Edit order</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

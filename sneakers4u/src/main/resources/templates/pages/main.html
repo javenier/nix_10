@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Sneakers4U</title>
+    <link rel="stylesheet" href="/css/mainPage.css">
+</head>
+<body>
+
+<div layout:fragment="content" class="h-100">
+
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-md-4">
+                <h1 class="my-4 mb-3 display-5">Sneakers4U</h1>
+                <p>We sale the dopest affordable family fashions. Our business was started in 1995 in Tuscaloosa, AL
+                    were we opened the 1st Hip-Hop Clothing Store called the Da Hot Spot. Originally from Mt. Vernon, NY
+                    were NYC has been 1 of the top cities for Street Fashions. After college we migrated to Georgia and
+                    kicked off the street fashion trendz once again when families no longer desired to shop in a
+                    mall.</p>
+                <a class="btn btn-outline-dark" th:href="@{/catalogue}" role="button">Catalogue</a>
+            </div>
+            <div class="col-md-8">
+                <img src="https://sneakerfreak.ru/wp-content/uploads/2021/01/Air-Jordan-4-Taupe-Haze-Infrared-DB0732-200-Release-Date-4-scaled.jpg"
+                     class="img-fluid"
+                     alt="Pair photo">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

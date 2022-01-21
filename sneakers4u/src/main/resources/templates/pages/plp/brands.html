@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Brands</title>
+
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section>
+        <div class="text-center container py-5">
+            <h4 class="mt-5 mb-5">Brands</h4>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4" th:each="brand : ${brands}">
+                    <div class="card h-100">
+                        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                             data-mdb-ripple-color="light">
+                            <img th:src="${brand.getImageUrl()}"
+                                 class="w-100"/>
+                            <div class="card-body">
+                                <a class="text-reset">
+                                    <h5 class="card-title mb-3" th:text="${brand.getName()}">Brand</h5>
+                                </a>
+                                <a class="btn btn-outline-dark" th:href="'/catalogue?brandId=' + ${brand.getId()}" role="button">Show sneakers</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Catalogue</title>
+
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section>
+        <div class="text-center container py-5">
+            <h4 class="mt-5 mb-5" th:text="${catalogueHeader}">Catalogue</h4>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4" th:each="sneaker : ${sneakers}">
+                    <div class="card h-100">
+                        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                                data-mdb-ripple-color="light">
+                            <img th:src="${sneaker.getImageUrl()}"
+                                    class="w-100"/>
+                        <div class="card-body">
+                            <a th:href="'/catalogue/details/' + ${sneaker.getId()}" class="text-reset">
+                                <h5 class="card-title mb-3" th:text="${sneaker.getBrand()}">Brand</h5>
+                            </a>
+                            <a th:href="'/catalogue/details/' + ${sneaker.getId()}" class="text-reset">
+                                <p th:text="${sneaker.getModel()} + ' ' + ${sneaker.getVersionOfModel()}">Model</p>
+                            </a>
+                            <h6 class="mb-3" th:text="${sneaker.getPrice()} + ' $'">Price</h6>
+                            <a class="btn btn-outline-dark" th:href="'/catalogue/details/' + ${sneaker.getId()}" role="button">More info</a>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+            </div>
+    </section>
+
+</div>
+
+</body>
+</html>

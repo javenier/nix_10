@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${sneaker.getBrand()} + ' ' + ${sneaker.getModel()} + ' ' + ${sneaker.getVersionOfModel()}">Pair
+        details</title>
+
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!-- Page Content -->
+    <div class="container">
+        <!-- Portfolio Item Heading -->
+        <h1 class="my-4 mt-5"
+            th:text="${sneaker.getBrand()} + ' ' + ${sneaker.getModel()} + ' ' + ${sneaker.getVersionOfModel()}">
+            Pair</h1>
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+            <div class="col-md-7">
+                <img class="img-fluid"
+                     th:src="${sneaker.getImageUrl()}"
+                     alt="Pair photo">
+            </div>
+
+            <div class="col-md-5">
+                <h2 class="my-1 mb-3">Pair details</h2>
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <h5>Gender:</h5>
+                    </li>
+                    <li class="list-inline-item">
+                        <h5 class="text-muted" th:text="${sneaker.getSneakerGender()}"></h5>
+                    </li>
+                </ul>
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <h5>Quantity:</h5>
+                    </li>
+                    <li class="list-inline-item">
+                        <h5 class="text-muted" th:text="${sneaker.getQuantity()}"></h5>
+                    </li>
+                </ul>
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <h5>Price:</h5>
+                    </li>
+                    <li class="list-inline-item">
+                        <h5 class="text-muted" th:text="${sneaker.getPrice()} + ' $'"></h5>
+                    </li>
+                </ul>
+
+                <div class="form-group">
+                    <h5 for="size">Choose size</h5>
+                    <select class="form-control" id="size">
+                        <option th:each="size : ${sizes}"
+                                th:value="${size.getSize()}"
+                                th:text="${size.getSize()}">
+                        </option>
+                    </select>
+                </div>
+
+                <button type="button" class="btn btn-outline-dark mt-2 btn-lg btn-block">Add to cart</button>
+
+                <!-- List with icons -->
+                <ul class="list-unstyled list mt-4">
+                    <li class="mb-3 d-flex align-items-center"><i class="fa fa-truck mr-3 text-secondary"></i>Fast
+                        worldwide shipping from Europe.
+                    </li>
+                    <li class="mb-3 d-flex align-items-center"><i class="fa fa-copyright mr-3 text-secondary"></i>We
+                        have only original items.
+                    </li>
+                    <li class="mb-3 d-flex align-items-center"><i class="fa fa-calendar mr-3 text-secondary"></i>You
+                        have 30 days to return.
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- /.row -->
+        <!-- Description Row -->
+        <h3 class="my-4">Description</h3>
+        <div class="row ml-1">
+            <p th:text="${sneaker.getDescription()}">Pair description</p>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</div>
+
+
+</body>
+</html>

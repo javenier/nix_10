@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout_admin}">
+<head>
+    <meta charset="utf-8">
+    <title>New size</title>
+</head>
+<body>
+
+<div layout:fragment="content_admin">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4>New size</h4>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{/admin/sizes/new}" th:object="${size}" method="post">
+                        <div class="form-group">
+                            <label for="sizeValue">Size value</label>
+                            <input type="text" class="form-control" id="sizeValue" aria-describedby="sizeValue" placeholder="Enter size value" th:field="*{size}">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-details">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout_admin}">
+<head>
+    <meta charset="utf-8">
+    <title th:text="${pageTitle}"/>
+</head>
+<body>
+
+<div layout:fragment="content_admin">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4>Sneaker</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Id</th>
+                            <td th:text="${sneaker.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Brand</th>
+                            <td th:text="${sneaker.getBrand()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Model</th>
+                            <td th:text="${sneaker.getModel()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Version of model</th>
+                            <td th:text="${sneaker.getVersionOfModel()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Sneaker gender</th>
+                            <td th:text="${sneaker.getSneakerGender()}"></td>
+                        </tr>
+                    </table>
+
+                    <form action="#" th:action="${action}" th:object="${link}" method="post">
+                        <div class="form-group">
+                            <label for="size">Select size:</label>
+                            <select class="form-control" id="size" th:field="*{sizeId}">
+                                <option th:each="size : ${sizes}"
+                                        th:value="${size.id}"
+                                        th:text="${size.size}">
+                                </option>
+                            </select>
+                        </div>
+                        <input type="hidden" id="sneakerId" aria-describedby="sneakerId" th:value="${link.sneakerId}" th:field="*{sneakerId}">
+                        <button type="submit" class="btn btn-primary btn-details" th:text="${buttonText}"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout_admin}">
+<head>
+    <meta charset="utf-8">
+    <title>New sneaker</title>
+</head>
+<body>
+
+<div layout:fragment="content_admin">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4>New sneaker</h4>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{/admin/sneakers/new}" th:object="${sneaker}" method="post">
+                        <div class="form-group">
+                            <label for="version">Version of model</label>
+                            <input type="text" class="form-control" id="version" aria-describedby="version" placeholder="Enter version of model" th:field="*{versionOfModel}">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="text" class="form-control" id="price" aria-describedby="price" placeholder="Enter price" th:field="*{price}">
+                        </div>
+                        <div class="form-group">
+                            <label for="imageUrl">Image URL</label>
+                            <input type="text" class="form-control" id="imageUrl" aria-describedby="imageUrl" placeholder="Enter image URL" th:field="*{imageUrl}">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="text" class="form-control" id="quantity" aria-describedby="quantity" placeholder="Enter quantity" th:field="*{quantity}">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Sneaker gender</label>
+                            <select class="form-control" id="gender" th:field="*{sneakerGender}">
+                                <option th:each="gender : ${genders}"
+                                        th:value="${gender.name()}"
+                                        th:text="${gender.name()}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" aria-describedby="description" rows="3" placeholder="Enter description" th:field="*{description}"></textarea>
+                        </div>
+                        <input type="hidden" id="modelId" aria-describedby="modelId" th:value="${sneaker.getModelId()}" th:field="*{modelId}">
+                        <button type="submit" class="btn btn-primary btn-details">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

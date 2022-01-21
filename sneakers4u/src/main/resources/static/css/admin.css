@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat');
+
+html,body {
+    background: linear-gradient(90deg, #E9DEFA 0%, #FBFCDB 100%);
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+a.nav-item.nav-link {
+    color: white;
+}
+
+.sort {
+    cursor: pointer;
+    margin-right: 2em;
+}
+
+.navbar{
+    background-color: #7868E6;
+}
+
+.btn-details{
+    background-color: #7868E6;
+    border: 0;
+}
+
+.btn-details:hover{
+    background-color: #B8B5FF;
+}
+
+.btn-delete{
+    background-color: #EF4F4F;
+    border: 0;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout_admin}">
+<head>
+    <meta charset="utf-8">
+    <title>Brand details</title>
+</head>
+<body>
+
+<div layout:fragment="content_admin">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Brand details
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>id</th>
+                            <td th:text="${brand.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>name</th>
+                            <td th:text="${brand.getName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>created</th>
+                            <td th:text="${#calendars.format(brand.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>updated</th>
+                            <td th:text="${#calendars.format(brand.getUpdated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <a th:href="@{'/admin/models?brandId=' + ${brand.getId()}}" type="button" class="btn btn-primary btn-details mr-5">Show all models</a>
+                    <a th:href="@{'/admin/sneakers?brandId=' + ${brand.getId()}}" type="button" class="btn btn-primary btn-details mr-5">Show all sneakers</a>
+                    <a th:href="@{'/admin/models/new?brandId=' + ${brand.getId()}}" type="button" class="btn btn-primary btn-details mr-5">Create new model</a>
+                    <a th:href="@{'/admin/brands/edit?id=' + ${brand.getId()}}" type="button" class="btn btn-primary btn-details">Edit brand</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

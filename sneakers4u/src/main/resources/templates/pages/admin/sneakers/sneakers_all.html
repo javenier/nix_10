@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/datatable_admin}">
+<head>
+    <meta charset="utf-8">
+    <title>Sneakers</title>
+</head>
+<body>
+
+<div layout:fragment="data_table_content">
+
+    <tr th:each="sneaker,iter : ${pageData.getItems()}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${sneaker.getBrand()}"></td>
+        <td th:text="${sneaker.getModel()}"></td>
+        <td th:text="${sneaker.getVersionOfModel()}"></td>
+        <td th:text="${sneaker.getPrice()}"></td>
+        <td th:text="${sneaker.getQuantity()}"></td>
+        <td>
+            <a th:href="@{'/admin/sneakers/details/' + ${sneaker.getId()}}" type="button" class="btn btn-primary btn-details">details</a>
+        </td>
+        <td>
+            <a th:href="@{'/admin/sneakers/delete/' + ${sneaker.getId()}}" type="button" class="btn btn-danger btn-delete">delete</a>
+        </td>
+    </tr>
+
+</div>
+
+</body>
+</html>

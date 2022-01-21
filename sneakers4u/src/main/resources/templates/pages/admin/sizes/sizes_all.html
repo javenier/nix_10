@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/datatable_admin}">
+<head>
+    <meta charset="utf-8">
+    <title>Sizes</title>
+</head>
+<body>
+
+<div layout:fragment="data_table_content">
+
+    <tr th:each="size,iter : ${pageData.getItems()}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${size.getSize()}"></td>
+        <td>
+            <a th:href="@{'/admin/sizes/delete/' + ${size.getId()}}" type="button" class="btn btn-danger btn-delete">delete</a>
+        </td>
+    </tr>
+</div>
+
+
+</body>
+</html>
