@@ -53,7 +53,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
                 limit + "," +
                 request.getPageSize()).getResultList();
 
-        for(Object[] object : sneakersRl) {
+        for (Object[] object : sneakersRl) {
             Sneaker sneaker = convertResultSetToSneaker(object);
             sneakers.add(sneaker);
         }
@@ -104,7 +104,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
                 limit + "," +
                 request.getPageSize()).getResultList();
 
-        for(Object[] object : sneakersRl) {
+        for (Object[] object : sneakersRl) {
             Sneaker sneaker = convertResultSetToSneaker(object);
             sneakers.add(sneaker);
         }
@@ -129,7 +129,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
                 limit + "," +
                 request.getPageSize()).getResultList();
 
-        for(Object[] object : sneakersRl) {
+        for (Object[] object : sneakersRl) {
             Sneaker sneaker = convertResultSetToSneaker(object);
             sneakers.add(sneaker);
         }
@@ -156,7 +156,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
                 limit + "," +
                 request.getPageSize()).getResultList();
 
-        for(Object[] object : sneakersRl) {
+        for (Object[] object : sneakersRl) {
             Sneaker sneaker = convertResultSetToSneaker(object);
             sneakers.add(sneaker);
         }
@@ -181,7 +181,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
                 limit + "," +
                 request.getPageSize()).getResultList();
 
-        for(Object[] object : sneakersRl) {
+        for (Object[] object : sneakersRl) {
             Sneaker sneaker = convertResultSetToSneaker(object);
             sneakers.add(sneaker);
         }
@@ -194,32 +194,43 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
 
     @Override
     @Transactional
-    public void deleteByModelIds(List<Long> ids) {
-        delete(ids);
+    public void deleteByBrandId(Long id) {
+        List<Long> modelIds = entityManager.
+                createQuery("select m.id from Model m where m.brand.id = :id").
+                setParameter("id", id).
+                getResultList();
+        delete(modelIds, null);
     }
 
     @Override
     @Transactional
-    public void deleteByBrandId(Long id) {
-        List<Long> modelIds =  entityManager.
-                createQuery("select m.id from Model m where m.brand.id = :id").
+    public void deleteByModelId(Long id) {
+        List<Long> sneakerIds = entityManager.
+                createQuery("select s.id from Sneaker s where s.model.id = :id").
                 setParameter("id", id).
                 getResultList();
-        delete(modelIds);
+        delete(null, sneakerIds);
     }
 
-    private void delete(List<Long> modelIds) {
-        if (CollectionUtils.isNotEmpty(modelIds)) {
-            List<Long> sneakerIds = entityManager.
-                    createQuery("select s.id from Sneaker s where s.model.id in :modelIds").
-                    setParameter("modelIds", modelIds).
-                    getResultList();
-            if (CollectionUtils.isNotEmpty(sneakerIds)) {
-                entityManager.
-                        createQuery("delete from Sneaker s where s.id in :sneakerIds").
-                        setParameter("sneakerIds", sneakerIds).
-                        executeUpdate();
+    private void delete(List<Long> modelIds, List<Long> sneakerIds) {
+        if(sneakerIds == null) {
+            if (CollectionUtils.isNotEmpty(modelIds)) {
+                sneakerIds = entityManager.
+                        createQuery("select s.id from Sneaker s where s.model.id in :modelIds").
+                        setParameter("modelIds", modelIds).
+                        getResultList();
+                if (CollectionUtils.isNotEmpty(sneakerIds)) {
+                    entityManager.
+                            createQuery("delete from Sneaker s where s.id in :sneakerIds").
+                            setParameter("sneakerIds", sneakerIds).
+                            executeUpdate();
+                }
             }
+        } else {
+            entityManager.
+                    createQuery("delete from Sneaker s where s.id in :sneakerIds").
+                    setParameter("sneakerIds", sneakerIds).
+                    executeUpdate();
         }
     }
 }

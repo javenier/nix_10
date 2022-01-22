@@ -53,24 +53,6 @@ public class BrandCustomRepositoryImpl implements BrandCustomRepository {
     @Override
     public void deleteById(Long id) {
         sneakerCustomRepository.deleteByBrandId(id);
-//        List<Long> modelIds =  entityManager.
-//                createQuery("select m.id from Model m where m.brand.id = :id").
-//                setParameter("id", id).
-//                getResultList();
-//
-//        if (CollectionUtils.isNotEmpty(modelIds)) {
-//            List<Long> sneakerIds = entityManager.
-//                    createQuery("select s.id from Sneaker s where s.model.id in :modelIds").
-//                    setParameter("modelIds", id).
-//                    getResultList();
-//            if (CollectionUtils.isNotEmpty(sneakerIds)) {
-//                entityManager.
-//                        createQuery("delete from Sneaker s where s.id in :sneakerIds").
-//                        setParameter("sneakerIds", id).
-//                        executeUpdate();
-//            }
-//        }
-
         entityManager.
                 createQuery("delete from Brand b where b.id = :id").
                 setParameter("id", id).

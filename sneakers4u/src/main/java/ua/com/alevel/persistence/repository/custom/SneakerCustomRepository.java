@@ -13,6 +13,6 @@ public interface SneakerCustomRepository extends BaseCustomRepository<Sneaker> {
     DataTableResponse<Sneaker> findAllByOrderId(DataTableRequest request, Long orderId);
     DataTableResponse<Sneaker> findAllByGender(DataTableRequest request, String gender);
 
-    void deleteByModelIds(List<Long> id);
     void deleteByBrandId(Long id);
+    void deleteByModelId(Long id);
 }

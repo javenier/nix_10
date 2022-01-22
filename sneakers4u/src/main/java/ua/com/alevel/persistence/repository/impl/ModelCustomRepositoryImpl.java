@@ -6,6 +6,7 @@ import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.item.attributes.Model;
 import ua.com.alevel.persistence.repository.BrandRepository;
 import ua.com.alevel.persistence.repository.custom.ModelCustomRepository;
+import ua.com.alevel.persistence.repository.custom.SneakerCustomRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,16 +20,19 @@ import java.util.*;
 public class ModelCustomRepositoryImpl implements ModelCustomRepository {
 
     private final BrandRepository brandRepository;
+    private final SneakerCustomRepository sneakerCustomRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public ModelCustomRepositoryImpl(BrandRepository brandRepository) {
+    public ModelCustomRepositoryImpl(BrandRepository brandRepository, SneakerCustomRepository sneakerCustomRepository) {
         this.brandRepository = brandRepository;
+        this.sneakerCustomRepository = sneakerCustomRepository;
     }
 
     @Override
     public void deleteById(Long id) {
+        sneakerCustomRepository.deleteByModelId(id);
         entityManager.
                 createQuery("delete from Model m where m.id = :id").
                 setParameter("id", id).
