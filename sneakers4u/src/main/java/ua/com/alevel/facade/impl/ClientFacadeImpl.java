@@ -106,4 +106,9 @@ public class ClientFacadeImpl implements ClientFacade {
     public void enableClient(Long id) {
         clientService.enableClient(id);
     }
+
+    @Override
+    public Long findUnfinishedOrderId(Long clientId) {
+        return clientService.findUnfinishedOrderId(clientId);
+    }
 }

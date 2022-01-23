@@ -6,8 +6,18 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import ua.com.alevel.persistence.entity.item.Sneaker;
+import ua.com.alevel.persistence.entity.order.Order;
 import ua.com.alevel.persistence.entity.user.Admin;
 import ua.com.alevel.persistence.repository.AdminRepository;
+import ua.com.alevel.persistence.repository.ClientRepository;
+import ua.com.alevel.persistence.repository.OrderRepository;
+import ua.com.alevel.persistence.repository.SneakerRepository;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 @SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
 public class SneakersEcommerceApplication {

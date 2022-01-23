@@ -7,7 +7,9 @@ import ua.com.alevel.persistence.entity.item.Sneaker;
 import ua.com.alevel.persistence.entity.user.Client;
 
 import javax.persistence.*;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -22,7 +24,7 @@ public class Order extends BaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(name = "order_sneaker", joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "sneaker_id"))
     private Set<Sneaker> sneakers;
@@ -35,10 +37,20 @@ public class Order extends BaseEntity {
     @Column(name = "post_office")
     private Integer postOffice;
 
+    @ElementCollection
+    @CollectionTable(name = "sneaker_size_current_order", joinColumns = @JoinColumn(name = "order_id"))
+    @MapKeyColumn(name = "sneaker_id")
+    @Column(name = "size_id")
+    private Map<Long, Long> sneakerSizeForCurrentOrder;
+
+    boolean finished;
+
     public Order() {
         super();
         this.sneakers = new HashSet<>();
+        this.sneakerSizeForCurrentOrder = new HashMap<>();
         totalPrice = 0L;
+        finished = false;
     }
 
     public Long getTotalPrice() {
@@ -87,6 +99,22 @@ public class Order extends BaseEntity {
 
     public void setPostOffice(Integer postOffice) {
         this.postOffice = postOffice;
+    }
+
+    public Map<Long, Long> getSneakerSizeForCurrentOrder() {
+        return sneakerSizeForCurrentOrder;
+    }
+
+    public void setSneakerSizeForCurrentOrder(Map<Long, Long> sneakerSizeForCurrentOrder) {
+        this.sneakerSizeForCurrentOrder = sneakerSizeForCurrentOrder;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     @Override

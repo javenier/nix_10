@@ -16,7 +16,7 @@ public class Size extends BaseEntity {
 
     private Integer size;
 
-    @ManyToMany(mappedBy = "sizes", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "sizes", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private Set<Sneaker> sneakers;
 
     public Size() {

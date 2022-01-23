@@ -1,25 +1,39 @@
 package ua.com.alevel.service.impl;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.persistence.entity.item.Sneaker;
+import ua.com.alevel.persistence.entity.item.attributes.Size;
+import ua.com.alevel.persistence.entity.order.Order;
+import ua.com.alevel.persistence.entity.user.Client;
+import ua.com.alevel.persistence.repository.ClientRepository;
+import ua.com.alevel.persistence.repository.OrderRepository;
+import ua.com.alevel.persistence.repository.custom.ClientCustomRepository;
 import ua.com.alevel.persistence.repository.custom.SneakerCustomRepository;
 import ua.com.alevel.persistence.repository.SneakerRepository;
 import ua.com.alevel.service.SneakerService;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class SneakerServiceImpl implements SneakerService {
 
     private final SneakerRepository sneakerRepository;
     private final SneakerCustomRepository sneakerCustomRepository;
+    private final OrderRepository orderRepository;
+    private final ClientCustomRepository clientCustomRepository;
+    private final ClientRepository clientRepository;
 
-    public SneakerServiceImpl(SneakerRepository sneakerRepository, SneakerCustomRepository sneakerCustomRepository) {
+    public SneakerServiceImpl(SneakerRepository sneakerRepository, SneakerCustomRepository sneakerCustomRepository, OrderRepository orderRepository, ClientCustomRepository clientCustomRepository, ClientRepository clientRepository) {
         this.sneakerRepository = sneakerRepository;
         this.sneakerCustomRepository = sneakerCustomRepository;
+        this.orderRepository = orderRepository;
+        this.clientCustomRepository = clientCustomRepository;
+        this.clientRepository = clientRepository;
     }
 
     @Override
@@ -90,5 +104,38 @@ public class SneakerServiceImpl implements SneakerService {
         long count = sneakerRepository.count();
         dataTableResponse.setItemsSize(count);
         return dataTableResponse;
+    }
+
+    @Override
+    public void addToCart(Sneaker sneaker, Size size) {
+        User loggedInUser = (User) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        Client client = clientRepository.findByEmail(loggedInUser.getUsername());
+        Long unfinishedOrderId = clientCustomRepository.findUnfinishedOrderId(client.getId());
+        if(unfinishedOrderId != null) {
+            Optional<Order> unfinishedOrder = orderRepository.findById(unfinishedOrderId);
+            if(unfinishedOrder.isPresent()) {
+                Order order = unfinishedOrder.get();
+                Long currentPrice = order.getTotalPrice();
+                currentPrice += sneaker.getPrice();
+                order.setTotalPrice(currentPrice);
+                order.getSneakers().add(sneaker);
+                order.getSneakerSizeForCurrentOrder().put(sneaker.getId(), size.getId());
+                orderRepository.save(order);
+            } else {
+                throw new EntityNotFoundException("order not found...");
+            }
+        } else {
+            Order order = new Order();
+            order.setTotalPrice(sneaker.getPrice());
+            order.setClient(client);
+            Set<Sneaker> sneakers = new HashSet<>();
+            sneakers.add(sneaker);
+            order.setSneakers(sneakers);
+            Map<Long, Long> sneakerSize = new HashMap<>();
+            sneakerSize.put(sneaker.getId(), size.getId());
+            order.setSneakerSizeForCurrentOrder(sneakerSize);
+            orderRepository.save(order);
+        }
     }
 }

@@ -6,10 +6,13 @@ import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.facade.SneakerFacade;
 import ua.com.alevel.persistence.entity.item.Sneaker;
+import ua.com.alevel.persistence.entity.item.attributes.Size;
 import ua.com.alevel.service.ModelService;
+import ua.com.alevel.service.SizeService;
 import ua.com.alevel.service.SneakerService;
 import ua.com.alevel.util.MoneyConverterUtil;
 import ua.com.alevel.util.WebRequestUtil;
+import ua.com.alevel.view.dto.cart.CartItemRequestDto;
 import ua.com.alevel.view.dto.sneaker.SneakerRequestDto;
 import ua.com.alevel.view.dto.sneaker.SneakerResponseDto;
 import ua.com.alevel.view.dto.webrequest.PageAndSizeData;
@@ -24,10 +27,12 @@ public class SneakerFacadeImpl implements SneakerFacade {
 
     private final SneakerService sneakerService;
     private final ModelService modelService;
+    private final SizeService sizeService;
 
-    public SneakerFacadeImpl(SneakerService sneakerService, ModelService modelService) {
+    public SneakerFacadeImpl(SneakerService sneakerService, ModelService modelService, SizeService sizeService) {
         this.sneakerService = sneakerService;
         this.modelService = modelService;
+        this.sizeService = sizeService;
     }
 
     @Override
@@ -200,5 +205,12 @@ public class SneakerFacadeImpl implements SneakerFacade {
         pageData.setItemsSize(dataTableResponse.getItemsSize());
         pageData.initPaginationState(pageData.getCurrentPage());
         return pageData;
+    }
+
+    @Override
+    public void addToCart(CartItemRequestDto cartItemRequestDto) {
+        Sneaker sneaker = sneakerService.findById(cartItemRequestDto.getSneakerId());
+        Size size = sizeService.findById(cartItemRequestDto.getSizeId());
+        sneakerService.addToCart(sneaker, size);
     }
 }

@@ -114,4 +114,9 @@ public class OrderFacadeImpl implements OrderFacade {
         pageData.initPaginationState(pageData.getCurrentPage());
         return pageData;
     }
+
+    @Override
+    public Order findEntityById(Long id) {
+        return orderService.findById(id);
+    }
 }

@@ -10,4 +10,6 @@ public interface ClientFacade extends BaseFacade<ClientRequestDto, ClientRespons
     void disableClient(Long id);
 
     void enableClient(Long id);
+
+    Long findUnfinishedOrderId(Long clientId);
 }

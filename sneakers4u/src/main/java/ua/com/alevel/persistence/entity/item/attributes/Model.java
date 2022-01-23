@@ -15,7 +15,7 @@ public class Model extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "model", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Sneaker> sneakers;
 
     @ManyToOne

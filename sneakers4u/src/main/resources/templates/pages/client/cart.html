@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-8 cart">
+                            <div class="title">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4><b>Shopping Cart</b></h4>
+                                    </div>
+                                    <div class="col align-self-center text-right text-muted" th:text="${countOfItems} + ' items'">Items</div>
+                                </div>
+                            </div>
+                            <div class="row border-top border-bottom" th:each="cartItem : ${cartItems}">
+                                <div class="row main align-items-center">
+                                    <div class="col-2"><img class="img-fluid" th:src="${cartItem.getImageUrl()}"></div>
+                                    <div class="col">
+                                        <div class="row text-muted" th:text="${cartItem.getBrand()}">Shirt</div>
+                                        <div class="row" th:text="${cartItem.getModelAndVersion()}">Cotton T-shirt</div>
+                                    </div>
+                                    <div class="col" th:text="${cartItem.getSize()} + ' EUR'"></div>
+                                    <div class="col" th:text="${cartItem.getPrice() + ' $'}">&euro; 44.00 <span class="close">&#10005;</span></div>
+                                </div>
+                            </div>
+                            <div class="back-to-shop"><a href="/catalogue">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                        </div>
+                        <div class="col-md-4 summary">
+                            <div>
+                                <h5><b>Summary</b></h5>
+                            </div>
+                            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                                <div class="col">TOTAL PRICE</div>
+                                <div class="col text-right" th:text="${totalPrice} + ' $'">&euro; 137.00</div>
+                            </div>
+                            <a class="btn btn-outline-dark" th:href="'#'" role="button">Place an order</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

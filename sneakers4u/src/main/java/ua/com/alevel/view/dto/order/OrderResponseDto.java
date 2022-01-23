@@ -11,6 +11,7 @@ public class OrderResponseDto extends ResponseDto {
     private String comment;
     private String address;
     private Integer postOffice;
+    private boolean finished;
 
     public OrderResponseDto(Order order) {
         super.setId(order.getId());
@@ -21,6 +22,7 @@ public class OrderResponseDto extends ResponseDto {
         this.comment = order.getComment();
         this.address = order.getAddress();
         this.postOffice = order.getPostOffice();
+        this.finished = order.isFinished();
     }
 
     public Long getClientId() {
@@ -61,5 +63,13 @@ public class OrderResponseDto extends ResponseDto {
 
     public void setPostOffice(Integer postOffice) {
         this.postOffice = postOffice;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 }

@@ -9,4 +9,6 @@ public interface ClientService extends BaseService<Client> {
     void disableClient(Long id);
 
     void enableClient(Long id);
+
+    Long findUnfinishedOrderId(Long clientId);
 }

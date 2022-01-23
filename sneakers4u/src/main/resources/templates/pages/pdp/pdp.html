@@ -54,17 +54,19 @@
                     </li>
                 </ul>
 
+                <form action="#" th:action="@{'/catalogue/details/' + ${sneaker.getId()}}" th:object="${cartItem}" method="post">
                 <div class="form-group">
                     <h5 for="size">Choose size</h5>
-                    <select class="form-control" id="size">
+                    <select class="form-control" id="size" th:field="*{sizeId}">
                         <option th:each="size : ${sizes}"
-                                th:value="${size.getSize()}"
+                                th:value="${size.getId()}"
                                 th:text="${size.getSize()}">
                         </option>
                     </select>
                 </div>
-
-                <button type="button" class="btn btn-outline-dark mt-2 btn-lg btn-block">Add to cart</button>
+                    <input type="hidden" id="sneakerId" aria-describedby="sneakerId" th:value="${cartItem.sneakerId}" th:field="*{sneakerId}">
+                <button type="submit" class="btn btn-outline-dark mt-2 btn-lg btn-block">Add to cart</button>
+                </form>
 
                 <!-- List with icons -->
                 <ul class="list-unstyled list mt-4">

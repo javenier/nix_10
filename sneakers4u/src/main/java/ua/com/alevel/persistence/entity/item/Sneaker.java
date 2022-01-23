@@ -21,10 +21,10 @@ public class Sneaker extends Item {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Model model;
 
-    @ManyToMany(mappedBy = "sneakers", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "sneakers", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private Set<Order> orders;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(name = "sneaker_size", joinColumns = @JoinColumn(name = "sneaker_id"),
             inverseJoinColumns = @JoinColumn(name = "size_id"))
     private Set<Size> sizes;

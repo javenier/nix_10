@@ -88,4 +88,9 @@ public class ClientServiceImpl implements ClientService {
         }
         clientCustomRepository.enableClient(id);
     }
+
+    @Override
+    public Long findUnfinishedOrderId(Long clientId) {
+        return clientCustomRepository.findUnfinishedOrderId(clientId);
+    }
 }

@@ -15,7 +15,7 @@ public class Brand extends BaseEntity {
 
     private String imageUrl;
 
-    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "brand", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Model> models;
 
     public Brand() {

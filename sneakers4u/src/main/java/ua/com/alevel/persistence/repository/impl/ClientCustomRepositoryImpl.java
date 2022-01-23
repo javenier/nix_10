@@ -3,11 +3,13 @@ package ua.com.alevel.persistence.repository.impl;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
+import ua.com.alevel.persistence.entity.order.Order;
 import ua.com.alevel.persistence.entity.user.Client;
 import ua.com.alevel.persistence.repository.custom.ClientCustomRepository;
 import ua.com.alevel.persistence.type.Gender;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
@@ -91,5 +93,20 @@ public class ClientCustomRepositoryImpl implements ClientCustomRepository {
                 createQuery("update User u set u.enabled = true where u.id = :id").
                 setParameter("id", id).
                 executeUpdate();
+    }
+
+    @Override
+    public Long findUnfinishedOrderId(Long clientId) {
+        Long orderId;
+        try {
+            orderId = (Long) entityManager.
+                    createQuery("select o.id from Client c inner join Order o " +
+                            "on c.id = o.client.id where o.finished = false and o.client.id = :clientId").
+                    setParameter("clientId", clientId).
+                    getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return orderId;
     }
 }
