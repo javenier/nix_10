@@ -32,8 +32,12 @@
               <td th:text="${#calendars.format(order.getUpdated(),'dd MMMM yyyy')}"></td>
             </tr>
             <tr>
-              <th>client id</th>
-              <td th:text="${order.getClientId()}"></td>
+              <th>client email</th>
+              <td th:text="${order.getClientEmail()}"></td>
+            </tr>
+            <tr>
+              <th>client full name</th>
+              <td th:text="${order.getClientFullName()}"></td>
             </tr>
             <tr>
               <th>total price</th>

@@ -4,12 +4,14 @@ import org.springframework.stereotype.Service;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.exception.EntityNotFoundException;
+import ua.com.alevel.persistence.entity.item.Sneaker;
 import ua.com.alevel.persistence.entity.item.attributes.Brand;
 import ua.com.alevel.persistence.entity.order.Order;
 import ua.com.alevel.persistence.repository.OrderRepository;
 import ua.com.alevel.persistence.repository.custom.OrderCustomRepository;
 import ua.com.alevel.service.OrderService;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -67,5 +69,16 @@ public class OrderServiceImpl implements OrderService {
         long count = orderRepository.count();
         dataTableResponse.setItemsSize(count);
         return dataTableResponse;
+    }
+
+    @Override
+    public void removeItemFromCart(Sneaker sneaker, Order order) {
+        order.getSneakers().removeIf(s -> (s.getId() == sneaker.getId()));
+        sneaker.getOrders().removeIf(o -> (o.getId() == order.getId()));
+        order.getSneakerSizeForCurrentOrder().remove(sneaker.getId());
+        Long currentPrice = order.getTotalPrice();
+        currentPrice -= sneaker.getPrice();
+        order.setTotalPrice(currentPrice);
+        orderRepository.save(order);
     }
 }

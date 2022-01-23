@@ -13,6 +13,8 @@ import ua.com.alevel.persistence.entity.order.Order;
 import ua.com.alevel.persistence.type.Gender;
 import ua.com.alevel.util.MoneyConverterUtil;
 import ua.com.alevel.view.dto.cart.CartItemResponseDto;
+import ua.com.alevel.view.dto.order.OrderRequestDto;
+import ua.com.alevel.view.dto.order.OrderResponseDto;
 import ua.com.alevel.view.dto.user.ClientRequestDto;
 import ua.com.alevel.view.dto.user.ClientResponseDto;
 
@@ -83,19 +85,48 @@ public class ClientController {
             model.addAttribute("cartItems", Collections.emptyList());
             model.addAttribute("countOfItems", 0);
             model.addAttribute("totalPrice", 0);
+            model.addAttribute("buttonVisible", false);
             return "pages/client/cart";
         }
         List<CartItemResponseDto> cartItems = generateListOfCartItems(order);
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("countOfItems", order.getSneakers().size());
         model.addAttribute("totalPrice", MoneyConverterUtil.pennyToString(order.getTotalPrice()));
+        model.addAttribute("orderId", orderId);
+        if(order.getSneakers().size() == 0)
+            model.addAttribute("buttonVisible", false);
+        else
+            model.addAttribute("buttonVisible", true);
         return "pages/client/cart";
+    }
+
+    @GetMapping("/cart/delete")
+    public String removeItemFromCart(@RequestParam Long orderId, @RequestParam Long sneakerId) {
+        orderFacade.removeItemFromCart(sneakerId, orderId);
+        return "redirect:/cart";
+    }
+
+    @GetMapping("/order/place")
+    public String placeOrder(Model model, @RequestParam Long id) {
+        OrderResponseDto order = orderFacade.findById(id);
+        model.addAttribute("order", order);
+        OrderRequestDto requestDto = new OrderRequestDto();
+        requestDto.setId(order.getId());
+        model.addAttribute("requestDto", requestDto);
+        return "pages/client/place_order";
+    }
+
+    @PostMapping("/order/place")
+    public String finishOrderPlacing(@ModelAttribute("requestDto") OrderRequestDto requestDto) {
+        orderFacade.confirmOrder(requestDto);
+        return "redirect:/";
     }
 
     List<CartItemResponseDto> generateListOfCartItems(Order order) {
         List<CartItemResponseDto> cartItems = new ArrayList<>();
         for(Sneaker sneaker : order.getSneakers()) {
             CartItemResponseDto cartItem = new CartItemResponseDto();
+            cartItem.setId(sneaker.getId());
             cartItem.setImageUrl(sneaker.getImageUrl());
             cartItem.setBrand(sneaker.getModel().getBrand().getName());
             cartItem.setModelAndVersion(sneaker.getModel().getName() + " " +

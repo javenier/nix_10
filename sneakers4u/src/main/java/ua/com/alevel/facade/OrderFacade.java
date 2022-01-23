@@ -11,4 +11,8 @@ public interface OrderFacade extends BaseFacade<OrderRequestDto, OrderResponseDt
     PageData<OrderResponseDto> findAllByClientId(WebRequest request, Long clientId);
 
     Order findEntityById(Long id);
+
+    void confirmOrder(OrderRequestDto requestDto);
+
+    void removeItemFromCart(Long sneakerId, Long orderId);
 }

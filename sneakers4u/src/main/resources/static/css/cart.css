@@ -1,7 +1,8 @@
 body {
     /*min-height: 100vh;*/
     vertical-align: middle;
-    display: flex;
+    display: block;
+    /*padding-top: 70px;*/
 }
 
 .title {

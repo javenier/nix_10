@@ -5,12 +5,12 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.facade.OrderFacade;
-import ua.com.alevel.persistence.entity.item.attributes.Brand;
+import ua.com.alevel.persistence.entity.item.Sneaker;
 import ua.com.alevel.persistence.entity.order.Order;
 import ua.com.alevel.service.OrderService;
+import ua.com.alevel.service.SneakerService;
 import ua.com.alevel.util.MoneyConverterUtil;
 import ua.com.alevel.util.WebRequestUtil;
-import ua.com.alevel.view.dto.brand.BrandResponseDto;
 import ua.com.alevel.view.dto.order.OrderRequestDto;
 import ua.com.alevel.view.dto.order.OrderResponseDto;
 import ua.com.alevel.view.dto.webrequest.PageAndSizeData;
@@ -24,9 +24,11 @@ import java.util.stream.Collectors;
 public class OrderFacadeImpl implements OrderFacade {
 
     private final OrderService orderService;
+    private final SneakerService sneakerService;
 
-    public OrderFacadeImpl(OrderService orderService) {
+    public OrderFacadeImpl(OrderService orderService, SneakerService sneakerService) {
         this.orderService = orderService;
+        this.sneakerService = sneakerService;
     }
 
     @Override
@@ -118,5 +120,28 @@ public class OrderFacadeImpl implements OrderFacade {
     @Override
     public Order findEntityById(Long id) {
         return orderService.findById(id);
+    }
+
+    @Override
+    public void confirmOrder(OrderRequestDto requestDto) {
+        Order order = orderService.findById(requestDto.getId());
+        if(order != null) {
+            order.setAddress(requestDto.getAddress());
+            order.setComment(requestDto.getComment());
+            order.setPostOffice(requestDto.getPostOffice());
+            order.setFinished(true);
+            for(Sneaker sneaker : order.getSneakers()) {
+                sneaker.setQuantity(sneaker.getQuantity() - 1);
+                sneakerService.update(sneaker);
+            }
+            orderService.update(order);
+        }
+    }
+
+    @Override
+    public void removeItemFromCart(Long sneakerId, Long orderId) {
+        Sneaker sneaker = sneakerService.findById(sneakerId);
+        Order order = orderService.findById(orderId);
+        orderService.removeItemFromCart(sneaker, order);
     }
 }

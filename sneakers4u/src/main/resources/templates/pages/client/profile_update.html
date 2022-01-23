@@ -6,15 +6,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
+    <link rel="stylesheet" href="/css/cart.css">
 </head>
 <body>
 
-<div layout:fragment="content">
-    <div class="container">
-        <div class="row mt-7">
+<div layout:fragment="content" class="h-100">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
             <div class="col-12">
-                <div class="card mt-5">
-                    <h5 class="card-header">Your profile</h5>
+                <div class="card">
+                    <h4 class="card-header" style="background-color: #ffffff; border-radius: 1rem 1rem 0rem 0rem;">Your profile</h4>
                     <div class="card-body">
                         <form action="#" th:action="@{/profile}" th:object="${requestDto}" method="post">
                             <div class="form-group">

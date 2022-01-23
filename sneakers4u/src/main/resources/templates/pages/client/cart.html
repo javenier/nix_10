@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div layout:fragment="content">
+<div layout:fragment="content" class="h-100">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12">
@@ -22,7 +22,9 @@
                                     <div class="col">
                                         <h4><b>Shopping Cart</b></h4>
                                     </div>
-                                    <div class="col align-self-center text-right text-muted" th:text="${countOfItems} + ' items'">Items</div>
+                                    <div class="col align-self-center text-right text-muted"
+                                         th:text="${countOfItems} + ' items'">Items
+                                    </div>
                                 </div>
                             </div>
                             <div class="row border-top border-bottom" th:each="cartItem : ${cartItems}">
@@ -33,10 +35,17 @@
                                         <div class="row" th:text="${cartItem.getModelAndVersion()}">Cotton T-shirt</div>
                                     </div>
                                     <div class="col" th:text="${cartItem.getSize()} + ' EUR'"></div>
-                                    <div class="col" th:text="${cartItem.getPrice() + ' $'}">&euro; 44.00 <span class="close">&#10005;</span></div>
+                                    <div class="col" th:text="${cartItem.getPrice() + ' $'}">&euro; 44.00</div>
+                                    <div class="col">
+                                        <a class="close" aria-label="Close"
+                                           th:href="'cart/delete?orderId=' + ${orderId} + '&sneakerId=' + ${cartItem.getId()}" role="button">
+                                            <span aria-hidden="true">&#10005;</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="back-to-shop"><a href="/catalogue">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                            <div class="back-to-shop"><a href="/catalogue">&leftarrow;</a><span class="text-muted">Back to shop</span>
+                            </div>
                         </div>
                         <div class="col-md-4 summary">
                             <div>
@@ -46,7 +55,8 @@
                                 <div class="col">TOTAL PRICE</div>
                                 <div class="col text-right" th:text="${totalPrice} + ' $'">&euro; 137.00</div>
                             </div>
-                            <a class="btn btn-outline-dark" th:href="'#'" role="button">Place an order</a>
+                            <a class="btn btn-outline-dark" th:href="'/order/place?id=' + ${orderId}" role="button"
+                               th:if="${buttonVisible}">Place an order</a>
                         </div>
                     </div>
                 </div>
@@ -54,8 +64,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 </body>

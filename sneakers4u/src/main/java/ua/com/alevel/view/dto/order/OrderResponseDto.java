@@ -6,7 +6,8 @@ import ua.com.alevel.view.dto.ResponseDto;
 
 public class OrderResponseDto extends ResponseDto {
 
-    private Long clientId;
+    private String clientEmail;
+    private String clientFullName;
     private String totalPrice;
     private String comment;
     private String address;
@@ -17,7 +18,8 @@ public class OrderResponseDto extends ResponseDto {
         super.setId(order.getId());
         super.setCreated(order.getCreated());
         super.setUpdated(order.getUpdated());
-        this.clientId = order.getClient().getId();
+        this.clientEmail = order.getClient().getEmail();
+        this.clientFullName = order.getClient().getFirstName() + " " + order.getClient().getLastName();
         this.totalPrice = MoneyConverterUtil.pennyToString(order.getTotalPrice());
         this.comment = order.getComment();
         this.address = order.getAddress();
@@ -25,12 +27,20 @@ public class OrderResponseDto extends ResponseDto {
         this.finished = order.isFinished();
     }
 
-    public Long getClientId() {
-        return clientId;
+    public String getClientEmail() {
+        return clientEmail;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setClientEmail(String clientEmail) {
+        this.clientEmail = clientEmail;
+    }
+
+    public String getClientFullName() {
+        return clientFullName;
+    }
+
+    public void setClientFullName(String clientFullName) {
+        this.clientFullName = clientFullName;
     }
 
     public String getTotalPrice() {

@@ -1,7 +1,5 @@
 package ua.com.alevel.view.dto.cart;
 
-import ua.com.alevel.persistence.entity.item.Sneaker;
-import ua.com.alevel.util.MoneyConverterUtil;
 import ua.com.alevel.view.dto.ResponseDto;
 
 public class CartItemResponseDto extends ResponseDto {
