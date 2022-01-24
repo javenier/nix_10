@@ -65,7 +65,9 @@
                     </select>
                 </div>
                     <input type="hidden" id="sneakerId" aria-describedby="sneakerId" th:value="${cartItem.sneakerId}" th:field="*{sneakerId}">
-                <button type="submit" class="btn btn-outline-dark mt-2 btn-lg btn-block">Add to cart</button>
+                <button type="submit" class="btn btn-outline-dark mt-2 btn-lg btn-block" th:if="${inStock}">Add to cart</button>
+                    <button type="submit" class="btn btn-outline-dark mt-2 btn-lg btn-block" th:if="${!inStock}" disabled>Add to cart</button>
+
                 </form>
 
                 <!-- List with icons -->

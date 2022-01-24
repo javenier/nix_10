@@ -5,11 +5,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.ClientFacade;
 import ua.com.alevel.facade.OrderFacade;
 import ua.com.alevel.facade.SizeFacade;
 import ua.com.alevel.persistence.entity.item.Sneaker;
 import ua.com.alevel.persistence.entity.order.Order;
+import ua.com.alevel.persistence.entity.user.Client;
 import ua.com.alevel.persistence.type.Gender;
 import ua.com.alevel.util.MoneyConverterUtil;
 import ua.com.alevel.view.dto.cart.CartItemResponseDto;
@@ -17,6 +19,7 @@ import ua.com.alevel.view.dto.order.OrderRequestDto;
 import ua.com.alevel.view.dto.order.OrderResponseDto;
 import ua.com.alevel.view.dto.user.ClientRequestDto;
 import ua.com.alevel.view.dto.user.ClientResponseDto;
+import ua.com.alevel.view.dto.webrequest.PageData;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -109,6 +112,11 @@ public class ClientController {
     @GetMapping("/order/place")
     public String placeOrder(Model model, @RequestParam Long id) {
         OrderResponseDto order = orderFacade.findById(id);
+        ClientResponseDto client = clientFacade.findByEmail(order.getClientEmail());
+        if((client.getFirstName() == null && client.getLastName() == null &&
+                client.getAge() == null && client.getGender() == null)) {
+            return "redirect:/profile";
+        }
         model.addAttribute("order", order);
         OrderRequestDto requestDto = new OrderRequestDto();
         requestDto.setId(order.getId());
@@ -120,6 +128,24 @@ public class ClientController {
     public String finishOrderPlacing(@ModelAttribute("requestDto") OrderRequestDto requestDto) {
         orderFacade.confirmOrder(requestDto);
         return "redirect:/";
+    }
+
+    @GetMapping("/profile/orders")
+    public String allOrdersByClient(Model model, WebRequest request) {
+        User loggedInUser = (User) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        ClientResponseDto client = clientFacade.findByEmail(loggedInUser.getUsername());
+        PageData<OrderResponseDto> orders = orderFacade.findAllByClientId(request, client.getId());
+        model.addAttribute("orders", orders);
+        return "pages/client/orders_all";
+    }
+
+    @GetMapping("/profile/orders/{id}")
+    public String orderDetails(Model model, @PathVariable Long id) {
+        Order order = orderFacade.findEntityById(id);
+        model.addAttribute("order", order);
+        model.addAttribute("totalPrice", MoneyConverterUtil.pennyToString(order.getTotalPrice()) + " $");
+        return "pages/client/order_details";
     }
 
     List<CartItemResponseDto> generateListOfCartItems(Order order) {
