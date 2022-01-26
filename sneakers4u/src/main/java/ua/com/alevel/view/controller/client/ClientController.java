@@ -4,8 +4,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import ua.com.alevel.facade.ClientFacade;
 import ua.com.alevel.facade.OrderFacade;
 import ua.com.alevel.facade.SizeFacade;
@@ -14,6 +16,8 @@ import ua.com.alevel.persistence.entity.order.Order;
 import ua.com.alevel.persistence.entity.user.Client;
 import ua.com.alevel.persistence.type.Gender;
 import ua.com.alevel.util.MoneyConverterUtil;
+import ua.com.alevel.util.WebRequestUtil;
+import ua.com.alevel.view.controller.BaseController;
 import ua.com.alevel.view.dto.cart.CartItemResponseDto;
 import ua.com.alevel.view.dto.order.OrderRequestDto;
 import ua.com.alevel.view.dto.order.OrderResponseDto;
@@ -28,11 +32,13 @@ import java.util.List;
 
 @Controller
 @RequestMapping
-public class ClientController {
+public class ClientController extends BaseController {
 
     private final ClientFacade clientFacade;
     private final OrderFacade orderFacade;
     private final SizeFacade sizeFacade;
+
+    private static final int DEFAULT_PAGE_SIZE_FOR_ORDERS = 5;
 
     public ClientController(ClientFacade clientFacade, OrderFacade orderFacade,
                             SizeFacade sizeFacade) {
@@ -136,8 +142,24 @@ public class ClientController {
                 getContext().getAuthentication().getPrincipal();
         ClientResponseDto client = clientFacade.findByEmail(loggedInUser.getUsername());
         PageData<OrderResponseDto> orders = orderFacade.findAllByClientId(request, client.getId());
-        model.addAttribute("orders", orders);
+        long totalPageSize = 1;
+        if(orders.getItemsSize() % DEFAULT_PAGE_SIZE_FOR_ORDERS == 0)
+            totalPageSize = orders.getItemsSize() / DEFAULT_PAGE_SIZE_FOR_ORDERS;
+        else
+            totalPageSize = orders.getItemsSize() / DEFAULT_PAGE_SIZE_FOR_ORDERS + 1;
+        List<Integer> pages = new ArrayList<>();
+        for (int i = 0; i < totalPageSize; i++) {
+            pages.add(i + 1);
+        }
+        model.addAttribute("pages", pages);
+        model.addAttribute("createUrl", "orders");
+        model.addAttribute("pageData", orders);
         return "pages/client/orders_all";
+    }
+
+    @PostMapping("/profile/orders")
+    public ModelAndView findAllRedirectOrders(WebRequest request, ModelMap model) {
+        return findAllRedirect(request, model, "profile/orders");
     }
 
     @GetMapping("/profile/orders/{id}")

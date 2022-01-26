@@ -56,7 +56,7 @@ public class BrandFacadeImpl implements BrandFacade {
 
     @Override
     public PageData<BrandResponseDto> findAll(WebRequest request) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());

@@ -212,6 +212,15 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
         delete(null, sneakerIds);
     }
 
+    @Override
+    public long countByBrandId(Long brandId) {
+        return (long) entityManager.
+                createQuery("select count(s.id) from Sneaker s inner join Model m " +
+                        "on s.model.id = m.id where m.brand.id = :brandId").
+                setParameter("brandId", brandId).
+                getSingleResult();
+    }
+
     private void delete(List<Long> modelIds, List<Long> sneakerIds) {
         if(sneakerIds == null) {
             if (CollectionUtils.isNotEmpty(modelIds)) {

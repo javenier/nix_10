@@ -20,9 +20,13 @@ public class WebRequestUtil {
 
     private WebRequestUtil() { }
 
-    public static PageAndSizeData generatePageAndSizeData(WebRequest webRequest) {
+    public static PageAndSizeData generatePageAndSizeData(WebRequest webRequest, Integer customPageSize) {
         int page = webRequest.getParameter(PAGE_PARAM) != null ? Integer.parseInt(Objects.requireNonNull(webRequest.getParameter(PAGE_PARAM))) : DEFAULT_PAGE_PARAM_VALUE;
-        int size = webRequest.getParameter(SIZE_PARAM) != null ? Integer.parseInt(Objects.requireNonNull(webRequest.getParameter(SIZE_PARAM))) : DEFAULT_SIZE_PARAM_VALUE;
+        int size;
+        if(customPageSize == null)
+            size = webRequest.getParameter(SIZE_PARAM) != null ? Integer.parseInt(Objects.requireNonNull(webRequest.getParameter(SIZE_PARAM))) : DEFAULT_SIZE_PARAM_VALUE;
+        else
+            size = customPageSize;
         return new PageAndSizeData(page, size);
     }
 

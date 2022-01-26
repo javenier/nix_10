@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public DataTableResponse<Order> findAllByClientId(DataTableRequest request, Long clientId) {
         DataTableResponse<Order> dataTableResponse = orderCustomRepository.findAllByClientId(request, clientId);
-        long count = orderRepository.count();
+        long count = orderRepository.countByClientId(clientId);
         dataTableResponse.setItemsSize(count);
         return dataTableResponse;
     }

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>All Personals</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="text-center">
+
+    <section layout:fragment="plp_content"></section>
+        <div class="pagination_rounded mt-5">
+            <ul>
+                <li th:classappend="${pageData.isShowPrevious() ? '' : 'disabled'}"><a
+                        th:onclick="|runPagination(${pageData.getCurrentPage()}, ${pageData.getPageSize()}, -1)|"
+                        href="#"
+                        class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i> Prev </a></li>
+                <li th:each="page : ${pages}" class="hidden-xs">
+                    <a th:onclick="|runPagination(${pageData.getCurrentPage()}, ${pageData.getPageSize()}, ${page.intValue()} - ${pageData.getCurrentPage()})|"
+                       href="#" th:text="${page.intValue()}"
+                       th:classappend="${pageData.getCurrentPage == page.intValue() ? 'current-page text-white' : ''}"></a>
+                </li>
+                <li th:classappend="${pageData.isShowNext() ? '' : 'disabled'}"><a
+                        th:onclick="|runPagination(${pageData.getCurrentPage()}, ${pageData.getPageSize()}, 1)|"
+                        href="#"
+                        class="next"> Next <i
+                        class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuLink"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort by
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#" th:data-sort="'price'"
+                   th:data-order="'asc'"
+                   onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Price, low
+                    to high</a>
+                <a class="dropdown-item" href="#" th:data-sort="'price'"
+                   th:data-order="'desc'"
+                   onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Price,
+                    high to
+                    low</a>
+                <a class="dropdown-item" href="#" th:data-sort="'created'"
+                   th:data-order="'asc'"
+                   onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Adding
+                    date, ascending</a>
+                <a class="dropdown-item" href="#" th:data-sort="'created'"
+                   th:data-order="'desc'"
+                   onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Adding
+                    date, descending</a>
+                <a class="dropdown-item" href="#" th:data-sort="'quantity'"
+                   th:data-order="'asc'"
+                   onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Quantity
+                    ascending</a>
+                <a class="dropdown-item" href="#" th:data-sort="'quantity'"
+                   th:data-order="'desc'"
+                   onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Quantity
+                    descending</a>
+            </div>
+        </div>
+
+
+    <form method="POST" th:action="@{${createUrl}}" id="personalSearch">
+        <input type="submit"
+               id="personalSearchSubmit"
+               style="visibility: hidden"
+        />
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+
+    <span th:data-sort="${pageData.getSort()}"
+          th:data-order="${pageData.getOrder()}"
+          th:data-page="${pageData.getCurrentPage()}"
+          th:data-size="${pageData.getPageSize()}"
+          id="pageData">
+    </span>
+
+</div>
+<th:block layout:fragment="scripts">
+    <script type="text/javascript" th:src="@{/js/pagination_admin.js}"></script>
+</th:block>
+</body>
+</html>

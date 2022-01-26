@@ -15,6 +15,7 @@ import ua.com.alevel.persistence.repository.OrderRepository;
 import ua.com.alevel.persistence.repository.custom.ClientCustomRepository;
 import ua.com.alevel.persistence.repository.custom.SneakerCustomRepository;
 import ua.com.alevel.persistence.repository.SneakerRepository;
+import ua.com.alevel.persistence.type.Gender;
 import ua.com.alevel.service.SneakerService;
 
 import java.util.*;
@@ -74,10 +75,12 @@ public class SneakerServiceImpl implements SneakerService {
         return dataTableResponse;
     }
 
+    //change count
     @Override
     public DataTableResponse<Sneaker> findAllByBrandId(DataTableRequest request, Long brandId) {
         DataTableResponse<Sneaker> dataTableResponse = sneakerCustomRepository.findAllByBrandId(request, brandId);
-        long count = sneakerRepository.count();
+        long count = sneakerCustomRepository.countByBrandId(brandId);
+        System.out.println(count);
         dataTableResponse.setItemsSize(count);
         return dataTableResponse;
     }
@@ -85,7 +88,7 @@ public class SneakerServiceImpl implements SneakerService {
     @Override
     public DataTableResponse<Sneaker> findAllByModelId(DataTableRequest request, Long modelId) {
         DataTableResponse<Sneaker> dataTableResponse = sneakerCustomRepository.findAllByModelId(request, modelId);
-        long count = sneakerRepository.count();
+        long count = sneakerRepository.countByModelId(modelId);
         dataTableResponse.setItemsSize(count);
         return dataTableResponse;
     }
@@ -101,7 +104,7 @@ public class SneakerServiceImpl implements SneakerService {
     @Override
     public DataTableResponse<Sneaker> findAllByGender(DataTableRequest request, String gender) {
         DataTableResponse<Sneaker> dataTableResponse = sneakerCustomRepository.findAllByGender(request, gender);
-        long count = sneakerRepository.count();
+        long count = sneakerRepository.countBySneakerGender(gender.equals("'MALE'") ? Gender.MALE : Gender.FEMALE);
         dataTableResponse.setItemsSize(count);
         return dataTableResponse;
     }

@@ -55,7 +55,7 @@ public class SizeFacadeImpl implements SizeFacade {
 
     @Override
     public PageData<SizeResponseDto> findAll(WebRequest request) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());
@@ -96,7 +96,7 @@ public class SizeFacadeImpl implements SizeFacade {
 
     @Override
     public PageData<SizeResponseDto> findAllBySneakerId(WebRequest request, Long sneakerId) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());

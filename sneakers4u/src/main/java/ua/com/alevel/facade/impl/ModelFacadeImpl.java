@@ -58,7 +58,7 @@ public class ModelFacadeImpl implements ModelFacade {
 
     @Override
     public PageData<ModelResponseDto> findAll(WebRequest request) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());
@@ -85,7 +85,7 @@ public class ModelFacadeImpl implements ModelFacade {
 
     @Override
     public PageData<ModelResponseDto> findAllByBrandId(WebRequest request, Long brandId) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());

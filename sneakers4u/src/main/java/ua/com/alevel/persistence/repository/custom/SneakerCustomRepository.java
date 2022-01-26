@@ -15,4 +15,6 @@ public interface SneakerCustomRepository extends BaseCustomRepository<Sneaker> {
 
     void deleteByBrandId(Long id);
     void deleteByModelId(Long id);
+
+    long countByBrandId(Long brandId);
 }

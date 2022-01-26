@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div layout:fragment="content">
+<div layout:fragment="content" class="text-center">
     <section>
         <div class="text-center container py-5">
             <h4 class="mt-5 mb-5">History of orders</h4>
@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-lg-8 mx-auto">
                     <ul class="list-group shadow card">
-                        <li class="list-group-item" th:each="order : ${orders.getItems()}">
+                        <li class="list-group-item" th:each="order : ${pageData.getItems()}">
                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                                 <div class="media-body order-2 order-lg-1">
                                     <h5 class="mt-0 font-weight-bold mb-2" th:text="'Order #' + ${order.getId()}"></h5>
@@ -38,7 +38,76 @@
             </div>
         </div>
     </section>
+    <div class="pagination_rounded mt-5">
+        <ul>
+            <li th:classappend="${pageData.isShowPrevious() ? '' : 'disabled'}"><a
+                    th:onclick="|runPagination(${pageData.getCurrentPage()}, ${pageData.getPageSize()}, -1)|" href="#"
+                    class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i> Prev </a></li>
+            <li th:each="page : ${pages}" class="hidden-xs">
+                <a th:onclick="|runPagination(${pageData.getCurrentPage()}, ${pageData.getPageSize()}, ${page.intValue()} - ${pageData.getCurrentPage()})|"
+                   href="#" th:text="${page.intValue()}"
+                   th:classappend="${pageData.getCurrentPage == page.intValue() ? 'current-page text-white' : ''}"></a>
+            </li>
+            <li th:classappend="${pageData.isShowNext() ? '' : 'disabled'}"><a
+                    th:onclick="|runPagination(${pageData.getCurrentPage()}, ${pageData.getPageSize()}, 1)|" href="#"
+                    class="next"> Next <i
+                    class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+        </ul>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuLink"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#" th:data-sort="'total_price'"
+               th:data-order="'asc'"
+               onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Total price, low
+                to high</a>
+            <a class="dropdown-item" href="#" th:data-sort="'total_price'"
+               th:data-order="'desc'"
+               onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Total price,
+                high to
+                low</a>
+            <a class="dropdown-item" href="#" th:data-sort="'created'"
+               th:data-order="'asc'"
+               onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Order
+                date, ascending</a>
+            <a class="dropdown-item" href="#" th:data-sort="'created'"
+               th:data-order="'desc'"
+               onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Order
+                date, descending</a>
+            <a class="dropdown-item" href="#" th:data-sort="'id'"
+               th:data-order="'asc'"
+               onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Order number,
+                ascending</a>
+            <a class="dropdown-item" href="#" th:data-sort="'id'"
+               th:data-order="'desc'"
+               onclick="runSort(this.getAttribute('data-sort'), this.getAttribute('data-order'))">Order number,
+                descending</a>
+        </div>
+    </div>
 
+
+    <form method="POST" th:action="@{${createUrl}}" id="personalSearch">
+        <input type="submit"
+               id="personalSearchSubmit"
+               style="visibility: hidden"
+        />
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+
+    <span th:data-sort="${pageData.getSort()}"
+          th:data-order="${pageData.getOrder()}"
+          th:data-page="${pageData.getCurrentPage()}"
+          th:data-size="${pageData.getPageSize()}"
+          id="pageData">
+    </span>
+
+</div>
+<th:block layout:fragment="scripts">
+    <script type="text/javascript" th:src="@{/js/pagination_admin.js}"></script>
+</th:block>
 </div>
 
 </body>

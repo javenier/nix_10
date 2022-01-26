@@ -65,7 +65,7 @@ public class OrderFacadeImpl implements OrderFacade {
 
     @Override
     public PageData<OrderResponseDto> findAll(WebRequest request) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());
@@ -92,7 +92,7 @@ public class OrderFacadeImpl implements OrderFacade {
 
     @Override
     public PageData<OrderResponseDto> findAllByClientId(WebRequest request, Long clientId) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, 5);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());

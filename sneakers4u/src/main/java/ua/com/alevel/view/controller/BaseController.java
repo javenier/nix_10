@@ -170,7 +170,11 @@ public abstract class BaseController {
     public ModelAndView findAllRedirect(WebRequest request, ModelMap model, String redirectUrl) {
         Map<String, String[]> parameterMap = request.getParameterMap();
         if (MapUtils.isNotEmpty(parameterMap)) {
-            parameterMap.forEach(model::addAttribute);
+            parameterMap.forEach((key, value) -> {
+                if(!key.equals("_csrf") && !key.equals("${_csrf.parameterName}")) {
+                    model.addAttribute(key, value);
+                }
+            });
         }
         return new ModelAndView("redirect:/" + redirectUrl, model);
     }

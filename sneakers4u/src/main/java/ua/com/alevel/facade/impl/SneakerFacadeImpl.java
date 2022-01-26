@@ -74,7 +74,7 @@ public class SneakerFacadeImpl implements SneakerFacade {
 
     @Override
     public PageData<SneakerResponseDto> findAll(WebRequest request) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());
@@ -101,7 +101,7 @@ public class SneakerFacadeImpl implements SneakerFacade {
 
     @Override
     public PageData<SneakerResponseDto> findAllByBrandId(WebRequest request, Long brandId) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());
@@ -128,7 +128,7 @@ public class SneakerFacadeImpl implements SneakerFacade {
 
     @Override
     public PageData<SneakerResponseDto> findAllByModelId(WebRequest request, Long modelId) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());
@@ -155,7 +155,7 @@ public class SneakerFacadeImpl implements SneakerFacade {
 
     @Override
     public PageData<SneakerResponseDto> findAllByOrderId(WebRequest request, Long orderId) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());
@@ -182,7 +182,7 @@ public class SneakerFacadeImpl implements SneakerFacade {
 
     @Override
     public PageData<SneakerResponseDto> findAllByGender(WebRequest request, String gender) {
-        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request);
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
         SortData sortData = WebRequestUtil.generateSortData(request);
         DataTableRequest dataTableRequest = new DataTableRequest();
         dataTableRequest.setOrder(sortData.getOrder());
