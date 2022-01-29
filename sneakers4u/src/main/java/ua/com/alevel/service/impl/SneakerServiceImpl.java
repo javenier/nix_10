@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
+import ua.com.alevel.exception.DuplicateItemInOrderException;
 import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.persistence.entity.item.Sneaker;
 import ua.com.alevel.persistence.entity.item.attributes.Size;
@@ -110,6 +111,14 @@ public class SneakerServiceImpl implements SneakerService {
     }
 
     @Override
+    public DataTableResponse<Sneaker> findAllBySearchQuery(DataTableRequest request, String query) {
+        DataTableResponse<Sneaker> dataTableResponse = sneakerCustomRepository.findAllBySearchQuery(request, query);
+        long count = sneakerRepository.countByFullNameContaining(query);
+        dataTableResponse.setItemsSize(count);
+        return dataTableResponse;
+    }
+
+    @Override
     public void addToCart(Sneaker sneaker, Size size) {
         User loggedInUser = (User) SecurityContextHolder.
                 getContext().getAuthentication().getPrincipal();
@@ -122,7 +131,8 @@ public class SneakerServiceImpl implements SneakerService {
                 Long currentPrice = order.getTotalPrice();
                 currentPrice += sneaker.getPrice();
                 order.setTotalPrice(currentPrice);
-                order.getSneakers().add(sneaker);
+                if(!order.getSneakers().add(sneaker))
+                    throw new DuplicateItemInOrderException("This item has been already added to the cart.");
                 order.getSneakerSizeForCurrentOrder().put(sneaker.getId(), size.getId());
                 orderRepository.save(order);
             } else {

@@ -11,5 +11,6 @@ public interface SneakerService extends BaseService<Sneaker> {
     DataTableResponse<Sneaker> findAllByModelId(DataTableRequest request, Long modelId);
     DataTableResponse<Sneaker> findAllByOrderId(DataTableRequest request, Long orderId);
     DataTableResponse<Sneaker> findAllByGender(DataTableRequest request, String gender);
+    DataTableResponse<Sneaker> findAllBySearchQuery(DataTableRequest request, String query);
     void addToCart(Sneaker sneaker, Size size);
 }

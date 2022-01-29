@@ -36,6 +36,9 @@ public class Sneaker extends Item {
     @Column(name = "version_of_model")
     private String versionOfModel;
 
+    @Column(name = "full_name")
+    private String fullName;
+
     public Sneaker() {
         super();
         this.orders = new HashSet<>();
@@ -80,6 +83,14 @@ public class Sneaker extends Item {
 
     public void setSizes(Set<Size> sizes) {
         this.sizes = sizes;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public void addSize(Size size) {

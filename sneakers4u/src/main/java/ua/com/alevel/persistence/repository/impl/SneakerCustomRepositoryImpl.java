@@ -72,9 +72,10 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
         String imageUrl = (String) resultSet[4];
         BigInteger price = (BigInteger) resultSet[5];
         Integer quantity = (Integer) resultSet[6];
-        String sneakerGender = (String) resultSet[7];
-        String versionOfModel = (String) resultSet[8];
-        BigInteger modelId = (BigInteger) resultSet[9];
+        String fullName = (String) resultSet[7];
+        String sneakerGender = (String) resultSet[8];
+        String versionOfModel = (String) resultSet[9];
+        BigInteger modelId = (BigInteger) resultSet[10];
         Sneaker sneaker = new Sneaker();
         sneaker.setId(id.longValue());
         sneaker.setCreated(new Date(created.getTime()));
@@ -83,6 +84,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
         sneaker.setImageUrl(imageUrl);
         sneaker.setPrice(price.longValue());
         sneaker.setQuantity(quantity.intValue());
+        sneaker.setFullName(fullName);
         sneaker.setSneakerGender(sneakerGender.equals("MALE") ? Gender.MALE : Gender.FEMALE);
         sneaker.setVersionOfModel(versionOfModel);
         sneaker.setModel(modelRepository.findById(modelId.longValue()).get());
@@ -193,6 +195,30 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
     }
 
     @Override
+    public DataTableResponse<Sneaker> findAllBySearchQuery(DataTableRequest request, String query) {
+        List<Sneaker> sneakers = new ArrayList<>();
+        Map<Object, Object> otherParamMap = new HashMap<>();
+        int limit = (request.getCurrentPage() - 1) * request.getPageSize();
+
+        List<Object[]> sneakersRl = entityManager.createNativeQuery("select * from sneakers where full_name like '%" +
+                query + "%' order by " +
+                request.getSort() + " " +
+                request.getOrder() + " limit " +
+                limit + "," +
+                request.getPageSize()).getResultList();
+
+        for (Object[] object : sneakersRl) {
+            Sneaker sneaker = convertResultSetToSneaker(object);
+            sneakers.add(sneaker);
+        }
+
+        DataTableResponse<Sneaker> dataTableResponse = new DataTableResponse<>();
+        dataTableResponse.setItems(sneakers);
+        dataTableResponse.setOtherParam(otherParamMap);
+        return dataTableResponse;
+    }
+
+    @Override
     @Transactional
     public void deleteByBrandId(Long id) {
         List<Long> modelIds = entityManager.
@@ -219,6 +245,13 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
                         "on s.model.id = m.id where m.brand.id = :brandId").
                 setParameter("brandId", brandId).
                 getSingleResult();
+    }
+
+    @Override
+    public List<Object[]> findAllSneakerNames() {
+        return entityManager.
+                createQuery("select s.model.brand.name, s.model.name, s.versionOfModel from Sneaker s").
+                getResultList();
     }
 
     private void delete(List<Long> modelIds, List<Long> sneakerIds) {

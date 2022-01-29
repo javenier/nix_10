@@ -133,3 +133,7 @@ a:link {
     background: #4285f4;
     /*color: #fff;*/
 }
+
+#searchField {
+    width: 300px !important;
+}

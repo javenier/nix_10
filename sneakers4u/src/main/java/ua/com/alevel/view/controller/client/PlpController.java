@@ -3,10 +3,7 @@ package ua.com.alevel.view.controller.client;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import ua.com.alevel.facade.BrandFacade;
@@ -33,17 +30,23 @@ public class PlpController extends BaseController {
     }
 
     @GetMapping
-    public String all(Model model, WebRequest request, @RequestParam(required = false) Long brandId) {
+    public String all(Model model,
+                      WebRequest request,
+                      @RequestParam(required = false) Long brandId,
+                      @RequestParam(required = false) String searchSneaker) {
         PageData<SneakerResponseDto> sneakers;
         if (brandId != null) {
             sneakers = sneakerFacade.findAllByBrandId(request, brandId);
             model.addAttribute("catalogueHeader", brandFacade.findById(brandId).getName());
+        } else if (searchSneaker != null) {
+            sneakers = sneakerFacade.findAllBySearchQuery(request, searchSneaker);
+            model.addAttribute("catalogueHeader", "Search results by '" + searchSneaker + "'");
         } else {
             sneakers = sneakerFacade.findAll(request);
             model.addAttribute("catalogueHeader", "All sneakers");
         }
         long totalPageSize = 1;
-        if(sneakers.getItemsSize() % WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE == 0)
+        if (sneakers.getItemsSize() % WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE == 0)
             totalPageSize = sneakers.getItemsSize() / WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE;
         else
             totalPageSize = sneakers.getItemsSize() / WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE + 1;
@@ -67,7 +70,7 @@ public class PlpController extends BaseController {
         PageData<SneakerResponseDto> sneakers = sneakerFacade.findAllByGender(request, "'MALE'");
         model.addAttribute("catalogueHeader", "Sneakers for men");
         long totalPageSize = 1;
-        if(sneakers.getItemsSize() % WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE == 0)
+        if (sneakers.getItemsSize() % WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE == 0)
             totalPageSize = sneakers.getItemsSize() / WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE;
         else
             totalPageSize = sneakers.getItemsSize() / WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE + 1;
@@ -92,7 +95,7 @@ public class PlpController extends BaseController {
         model.addAttribute("sneakers", sneakers.getItems());
         model.addAttribute("catalogueHeader", "Sneakers for women");
         long totalPageSize = 1;
-        if(sneakers.getItemsSize() % WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE == 0)
+        if (sneakers.getItemsSize() % WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE == 0)
             totalPageSize = sneakers.getItemsSize() / WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE;
         else
             totalPageSize = sneakers.getItemsSize() / WebRequestUtil.DEFAULT_SIZE_PARAM_VALUE + 1;
@@ -116,5 +119,16 @@ public class PlpController extends BaseController {
         PageData<BrandResponseDto> pageData = brandFacade.findAll(request);
         model.addAttribute("brands", pageData.getItems());
         return "pages/plp/brands";
+    }
+
+    @GetMapping("/suggestions")
+    private @ResponseBody
+    List<String> searchSneakers(@RequestParam String query) {
+        return sneakerFacade.searchBySneakerName(query);
+    }
+
+    @PostMapping("/search")
+    private String search(@RequestParam String query) {
+        return "redirect:/catalogue?searchSneaker=" + query;
     }
 }

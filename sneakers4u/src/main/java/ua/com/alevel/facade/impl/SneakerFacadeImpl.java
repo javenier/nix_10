@@ -7,6 +7,7 @@ import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.facade.SneakerFacade;
 import ua.com.alevel.persistence.entity.item.Sneaker;
 import ua.com.alevel.persistence.entity.item.attributes.Size;
+import ua.com.alevel.service.ElasticSneakerSearchService;
 import ua.com.alevel.service.ModelService;
 import ua.com.alevel.service.SizeService;
 import ua.com.alevel.service.SneakerService;
@@ -28,11 +29,13 @@ public class SneakerFacadeImpl implements SneakerFacade {
     private final SneakerService sneakerService;
     private final ModelService modelService;
     private final SizeService sizeService;
+    private final ElasticSneakerSearchService elasticSneakerSearchService;
 
-    public SneakerFacadeImpl(SneakerService sneakerService, ModelService modelService, SizeService sizeService) {
+    public SneakerFacadeImpl(SneakerService sneakerService, ModelService modelService, SizeService sizeService, ElasticSneakerSearchService elasticSneakerSearchService) {
         this.sneakerService = sneakerService;
         this.modelService = modelService;
         this.sizeService = sizeService;
+        this.elasticSneakerSearchService = elasticSneakerSearchService;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class SneakerFacadeImpl implements SneakerFacade {
         sneaker.setModel(modelService.findById(sneakerRequestDto.getModelId()));
         sneaker.setSneakerGender(sneakerRequestDto.getSneakerGender());
         sneaker.setVersionOfModel(sneakerRequestDto.getVersionOfModel());
+        sneaker.setFullName(sneaker.getModel().getBrand().getName() + " " + sneaker.getModel().getName() + " " + sneaker.getVersionOfModel());
         sneakerService.create(sneaker);
     }
 
@@ -208,9 +212,41 @@ public class SneakerFacadeImpl implements SneakerFacade {
     }
 
     @Override
+    public PageData<SneakerResponseDto> findAllBySearchQuery(WebRequest request, String query) {
+        PageAndSizeData pageAndSizeData = WebRequestUtil.generatePageAndSizeData(request, null);
+        SortData sortData = WebRequestUtil.generateSortData(request);
+        DataTableRequest dataTableRequest = new DataTableRequest();
+        dataTableRequest.setOrder(sortData.getOrder());
+        dataTableRequest.setSort(sortData.getSort());
+        dataTableRequest.setPageSize(pageAndSizeData.getSize());
+        dataTableRequest.setCurrentPage(pageAndSizeData.getPage());
+
+        DataTableResponse<Sneaker> dataTableResponse = sneakerService.findAllBySearchQuery(dataTableRequest, query);
+        List<SneakerResponseDto> sneakers = dataTableResponse.getItems().
+                stream().
+                map(SneakerResponseDto::new).
+                collect(Collectors.toList());
+
+        PageData<SneakerResponseDto> pageData = new PageData<>();
+        pageData.setItems(sneakers);
+        pageData.setCurrentPage(pageAndSizeData.getPage());
+        pageData.setPageSize(pageAndSizeData.getSize());
+        pageData.setOrder(sortData.getOrder());
+        pageData.setSort(sortData.getSort());
+        pageData.setItemsSize(dataTableResponse.getItemsSize());
+        pageData.initPaginationState(pageData.getCurrentPage());
+        return pageData;
+    }
+
+    @Override
     public void addToCart(CartItemRequestDto cartItemRequestDto) {
         Sneaker sneaker = sneakerService.findById(cartItemRequestDto.getSneakerId());
         Size size = sizeService.findById(cartItemRequestDto.getSizeId());
         sneakerService.addToCart(sneaker, size);
+    }
+
+    @Override
+    public List<String> searchBySneakerName(String query) {
+        return elasticSneakerSearchService.searchBySneakerName(query);
     }
 }
