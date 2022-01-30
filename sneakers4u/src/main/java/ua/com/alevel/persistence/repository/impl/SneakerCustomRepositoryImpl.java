@@ -99,7 +99,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
 
         List<Object[]> sneakersRl = entityManager.createNativeQuery("select s.id, s.created, s.updated, description," +
-                " image_url, price, quantity, sneaker_gender, version_of_model, model_id from sneakers as s inner join" +
+                " image_url, price, quantity, full_name, sneaker_gender, version_of_model, model_id from sneakers as s inner join" +
                 " models as m on s.model_id = m.id where m.brand_id = " + brandId + " order by " +
                 request.getSort() + " " +
                 request.getOrder() + " limit " +
@@ -150,7 +150,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
 
         List<Object[]> sneakersRl = entityManager.createNativeQuery("select s.id, s.created, s.updated," +
-                " description, image_url, price, quantity, sneaker_gender, version_of_model, model_id from sneakers" +
+                " description, image_url, price, quantity, full_name, sneaker_gender, version_of_model, model_id from sneakers" +
                 " as s left join order_sneaker as os on s.id = os.sneaker_id where order_id" +
                 " = " + orderId + " order by " +
                 request.getSort() + " " +
