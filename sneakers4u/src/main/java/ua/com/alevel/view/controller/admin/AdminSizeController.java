@@ -6,12 +6,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import ua.com.alevel.exception.CustomNumberFormatException;
 import ua.com.alevel.facade.ModelFacade;
 import ua.com.alevel.facade.SizeFacade;
 import ua.com.alevel.facade.SneakerFacade;
 import ua.com.alevel.view.controller.BaseController;
 import ua.com.alevel.view.dto.link.SneakerSizeLinkRequestDto;
-import ua.com.alevel.view.dto.model.ModelResponseDto;
 import ua.com.alevel.view.dto.size.SizeRequestDto;
 import ua.com.alevel.view.dto.size.SizeResponseDto;
 import ua.com.alevel.view.dto.sneaker.SneakerResponseDto;
@@ -31,7 +31,7 @@ public class AdminSizeController extends BaseController {
         this.sneakerFacade = sneakerFacade;
     }
 
-    private final HeaderName[] columnNamesForFindAll = new HeaderName[] {
+    private final HeaderName[] columnNamesForFindAll = new HeaderName[]{
             new HeaderName("#", null, null),
             new HeaderName("size", "size", "size"),
             new HeaderName("delete", null, null)
@@ -40,7 +40,7 @@ public class AdminSizeController extends BaseController {
     @GetMapping
     public String allSizes(Model model, WebRequest request, @RequestParam(required = false) Long sneakerId) {
         PageData<SizeResponseDto> pageData;
-        if(sneakerId != null) {
+        if (sneakerId != null) {
             pageData = sizeFacade.findAllBySneakerId(request, sneakerId);
         } else {
             pageData = sizeFacade.findAll(request);
@@ -67,6 +67,11 @@ public class AdminSizeController extends BaseController {
 
     @PostMapping("/new")
     public String createNewSize(@ModelAttribute("size") SizeRequestDto dto) {
+        try {
+            Integer.parseInt(dto.getSize().toString());
+        } catch (NumberFormatException e) {
+            throw new CustomNumberFormatException("Invalid size. It must be a number.");
+        }
         sizeFacade.create(dto);
         return "redirect:/admin/sizes";
     }

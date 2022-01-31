@@ -5,13 +5,11 @@ import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.persistence.entity.item.Sneaker;
-import ua.com.alevel.persistence.entity.item.attributes.Brand;
 import ua.com.alevel.persistence.entity.order.Order;
 import ua.com.alevel.persistence.repository.OrderRepository;
 import ua.com.alevel.persistence.repository.custom.OrderCustomRepository;
 import ua.com.alevel.service.OrderService;
 
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -32,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void update(Order entity) {
-        if(!orderRepository.existsById(entity.getId())) {
+        if (!orderRepository.existsById(entity.getId())) {
             throw new EntityNotFoundException("not found...");
         }
         orderRepository.save(entity);
@@ -40,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void delete(Long id) {
-        if(!orderRepository.existsById(id)) {
+        if (!orderRepository.existsById(id)) {
             throw new EntityNotFoundException("not found...");
         }
         orderCustomRepository.deleteById(id);
@@ -49,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findById(Long id) {
         Optional<Order> order = orderRepository.findById(id);
-        if(order.isPresent())
+        if (order.isPresent())
             return order.get();
         else
             throw new EntityNotFoundException("not found...");

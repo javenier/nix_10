@@ -1,7 +1,6 @@
 package ua.com.alevel.persistence.entity.item.attributes;
 
 import ua.com.alevel.persistence.entity.BaseEntity;
-import ua.com.alevel.persistence.entity.item.Sneaker;
 
 import javax.persistence.*;
 import java.util.HashSet;

@@ -9,11 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.com.alevel.facade.ClientFacade;
 import ua.com.alevel.persistence.type.Gender;
 import ua.com.alevel.view.controller.BaseController;
-import ua.com.alevel.view.dto.order.OrderRequestDto;
-import ua.com.alevel.view.dto.order.OrderResponseDto;
 import ua.com.alevel.view.dto.user.ClientRequestDto;
 import ua.com.alevel.view.dto.user.ClientResponseDto;
-import ua.com.alevel.view.dto.user.UserResponseDto;
 import ua.com.alevel.view.dto.webrequest.PageData;
 
 @Controller
@@ -22,10 +19,10 @@ public class AdminController extends BaseController {
 
     private final ClientFacade clientFacade;
 
-    private final HeaderName[] columnNamesForFindAll = new HeaderName[] {
+    private final HeaderName[] columnNamesForFindAll = new HeaderName[]{
             new HeaderName("#", null, null),
             new HeaderName("email", "email", "email"),
-            new HeaderName("enabled", "enabled", "enabled"),
+            new HeaderName("enabled", null, null),
             new HeaderName("details", null, null),
             new HeaderName("enablement", null, null),
             new HeaderName("delete", null, null)

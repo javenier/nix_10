@@ -45,7 +45,7 @@ public class SneakerServiceImpl implements SneakerService {
 
     @Override
     public void update(Sneaker entity) {
-        if(!sneakerRepository.existsById(entity.getId())) {
+        if (!sneakerRepository.existsById(entity.getId())) {
             throw new EntityNotFoundException("not found...");
         }
         sneakerRepository.save(entity);
@@ -53,7 +53,7 @@ public class SneakerServiceImpl implements SneakerService {
 
     @Override
     public void delete(Long id) {
-        if(!sneakerRepository.existsById(id)) {
+        if (!sneakerRepository.existsById(id)) {
             throw new EntityNotFoundException("not found...");
         }
         sneakerCustomRepository.deleteById(id);
@@ -62,7 +62,7 @@ public class SneakerServiceImpl implements SneakerService {
     @Override
     public Sneaker findById(Long id) {
         Optional<Sneaker> sneaker = sneakerRepository.findById(id);
-        if(sneaker.isPresent())
+        if (sneaker.isPresent())
             return sneaker.get();
         else
             throw new EntityNotFoundException("not found...");
@@ -124,14 +124,14 @@ public class SneakerServiceImpl implements SneakerService {
                 getContext().getAuthentication().getPrincipal();
         Client client = clientRepository.findByEmail(loggedInUser.getUsername());
         Long unfinishedOrderId = clientCustomRepository.findUnfinishedOrderId(client.getId());
-        if(unfinishedOrderId != null) {
+        if (unfinishedOrderId != null) {
             Optional<Order> unfinishedOrder = orderRepository.findById(unfinishedOrderId);
-            if(unfinishedOrder.isPresent()) {
+            if (unfinishedOrder.isPresent()) {
                 Order order = unfinishedOrder.get();
                 Long currentPrice = order.getTotalPrice();
                 currentPrice += sneaker.getPrice();
                 order.setTotalPrice(currentPrice);
-                if(!order.getSneakers().add(sneaker))
+                if (!order.getSneakers().add(sneaker))
                     throw new DuplicateItemInOrderException("This item has been already added to the cart.");
                 order.getSneakerSizeForCurrentOrder().put(sneaker.getId(), size.getId());
                 orderRepository.save(order);

@@ -34,7 +34,7 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public void update(Size entity) {
-        if(!sizeRepository.existsById(entity.getId())) {
+        if (!sizeRepository.existsById(entity.getId())) {
             throw new EntityNotFoundException("not found...");
         }
         sizeRepository.save(entity);
@@ -42,7 +42,7 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public void delete(Long id) {
-        if(!sizeRepository.existsById(id)) {
+        if (!sizeRepository.existsById(id)) {
             throw new EntityNotFoundException("not found...");
         }
         sizeCustomRepository.deleteById(id);
@@ -51,7 +51,7 @@ public class SizeServiceImpl implements SizeService {
     @Override
     public Size findById(Long id) {
         Optional<Size> size = sizeRepository.findById(id);
-        if(size.isPresent())
+        if (size.isPresent())
             return size.get();
         else
             throw new EntityNotFoundException("not found...");

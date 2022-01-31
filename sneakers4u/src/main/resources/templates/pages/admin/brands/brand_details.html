@@ -37,10 +37,14 @@
                         </tr>
                     </table>
                     <hr>
-                    <a th:href="@{'/admin/models?brandId=' + ${brand.getId()}}" type="button" class="btn btn-primary btn-details mr-5">Show all models</a>
-                    <a th:href="@{'/admin/sneakers?brandId=' + ${brand.getId()}}" type="button" class="btn btn-primary btn-details mr-5">Show all sneakers</a>
-                    <a th:href="@{'/admin/models/new?brandId=' + ${brand.getId()}}" type="button" class="btn btn-primary btn-details mr-5">Create new model</a>
-                    <a th:href="@{'/admin/brands/edit?id=' + ${brand.getId()}}" type="button" class="btn btn-primary btn-details">Edit brand</a>
+                    <a th:href="@{'/admin/models?brandId=' + ${brand.getId()}}" type="button"
+                       class="btn btn-primary btn-details mr-5">Show all models</a>
+                    <a th:href="@{'/admin/sneakers?brandId=' + ${brand.getId()}}" type="button"
+                       class="btn btn-primary btn-details mr-5">Show all sneakers</a>
+                    <a th:href="@{'/admin/models/new?brandId=' + ${brand.getId()}}" type="button"
+                       class="btn btn-primary btn-details mr-5">Create new model</a>
+                    <a th:href="@{'/admin/brands/edit?id=' + ${brand.getId()}}" type="button"
+                       class="btn btn-primary btn-details">Edit brand</a>
                 </div>
             </div>
         </div>

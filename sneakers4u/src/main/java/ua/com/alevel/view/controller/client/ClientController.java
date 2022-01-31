@@ -8,15 +8,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import ua.com.alevel.exception.CustomNumberFormatException;
 import ua.com.alevel.facade.ClientFacade;
 import ua.com.alevel.facade.OrderFacade;
 import ua.com.alevel.facade.SizeFacade;
 import ua.com.alevel.persistence.entity.item.Sneaker;
 import ua.com.alevel.persistence.entity.order.Order;
-import ua.com.alevel.persistence.entity.user.Client;
 import ua.com.alevel.persistence.type.Gender;
 import ua.com.alevel.util.MoneyConverterUtil;
-import ua.com.alevel.util.WebRequestUtil;
 import ua.com.alevel.view.controller.BaseController;
 import ua.com.alevel.view.dto.cart.CartItemResponseDto;
 import ua.com.alevel.view.dto.order.OrderRequestDto;
@@ -57,7 +56,7 @@ public class ClientController extends BaseController {
         User loggedInUser = (User) SecurityContextHolder.
                 getContext().getAuthentication().getPrincipal();
         ClientResponseDto client = clientFacade.findByEmail(loggedInUser.getUsername());
-        if((client.getFirstName() == null && client.getLastName() == null &&
+        if ((client.getFirstName() == null && client.getLastName() == null &&
                 client.getAge() == null && client.getGender() == null) || update) {
             ClientRequestDto requestDto = new ClientRequestDto();
             requestDto.setId(client.getId());
@@ -72,6 +71,11 @@ public class ClientController extends BaseController {
 
     @PostMapping("/profile")
     public String fillProfile(@ModelAttribute("requestDto") ClientRequestDto clientRequestDto) {
+        try {
+            Integer.parseInt(clientRequestDto.getAge().toString());
+        } catch (NumberFormatException e) {
+            throw new CustomNumberFormatException("Invalid age. Please, try again.");
+        }
         clientFacade.update(clientRequestDto);
         return "redirect:/catalogue";
     }
@@ -88,7 +92,7 @@ public class ClientController extends BaseController {
         ClientResponseDto client = clientFacade.findByEmail(loggedInUser.getUsername());
         Long orderId = clientFacade.findUnfinishedOrderId(client.getId());
         Order order;
-        if(orderId != null) {
+        if (orderId != null) {
             order = orderFacade.findEntityById(orderId);
         } else {
             model.addAttribute("cartItems", Collections.emptyList());
@@ -102,7 +106,7 @@ public class ClientController extends BaseController {
         model.addAttribute("countOfItems", order.getSneakers().size());
         model.addAttribute("totalPrice", MoneyConverterUtil.pennyToString(order.getTotalPrice()));
         model.addAttribute("orderId", orderId);
-        if(order.getSneakers().size() == 0)
+        if (order.getSneakers().size() == 0)
             model.addAttribute("buttonVisible", false);
         else
             model.addAttribute("buttonVisible", true);
@@ -119,7 +123,7 @@ public class ClientController extends BaseController {
     public String placeOrder(Model model, @RequestParam Long id) {
         OrderResponseDto order = orderFacade.findById(id);
         ClientResponseDto client = clientFacade.findByEmail(order.getClientEmail());
-        if((client.getFirstName() == null && client.getLastName() == null &&
+        if ((client.getFirstName() == null && client.getLastName() == null &&
                 client.getAge() == null && client.getGender() == null)) {
             return "redirect:/profile";
         }
@@ -132,6 +136,11 @@ public class ClientController extends BaseController {
 
     @PostMapping("/order/place")
     public String finishOrderPlacing(@ModelAttribute("requestDto") OrderRequestDto requestDto) {
+        try {
+            Integer.parseInt(requestDto.getPostOffice().toString());
+        } catch (NumberFormatException e) {
+            throw new CustomNumberFormatException("Invalid post office. It must be a number.");
+        }
         orderFacade.confirmOrder(requestDto);
         return "redirect:/";
     }
@@ -143,7 +152,7 @@ public class ClientController extends BaseController {
         ClientResponseDto client = clientFacade.findByEmail(loggedInUser.getUsername());
         PageData<OrderResponseDto> orders = orderFacade.findAllByClientId(request, client.getId());
         long totalPageSize = 1;
-        if(orders.getItemsSize() % DEFAULT_PAGE_SIZE_FOR_ORDERS == 0)
+        if (orders.getItemsSize() % DEFAULT_PAGE_SIZE_FOR_ORDERS == 0)
             totalPageSize = orders.getItemsSize() / DEFAULT_PAGE_SIZE_FOR_ORDERS;
         else
             totalPageSize = orders.getItemsSize() / DEFAULT_PAGE_SIZE_FOR_ORDERS + 1;
@@ -172,7 +181,7 @@ public class ClientController extends BaseController {
 
     List<CartItemResponseDto> generateListOfCartItems(Order order) {
         List<CartItemResponseDto> cartItems = new ArrayList<>();
-        for(Sneaker sneaker : order.getSneakers()) {
+        for (Sneaker sneaker : order.getSneakers()) {
             CartItemResponseDto cartItem = new CartItemResponseDto();
             cartItem.setId(sneaker.getId());
             cartItem.setImageUrl(sneaker.getImageUrl());

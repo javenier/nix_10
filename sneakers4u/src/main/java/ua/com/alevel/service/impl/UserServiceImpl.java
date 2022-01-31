@@ -6,7 +6,6 @@ import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.exception.EntityNotFoundException;
 import ua.com.alevel.persistence.entity.user.User;
 import ua.com.alevel.persistence.repository.UserRepository;
-import ua.com.alevel.persistence.repository.custom.ClientCustomRepository;
 import ua.com.alevel.service.UserService;
 
 import java.util.Optional;
@@ -27,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User entity) {
-        if(!userRepository.existsById(entity.getId())) {
+        if (!userRepository.existsById(entity.getId())) {
             throw new EntityNotFoundException("not found...");
         }
         userRepository.save(entity);
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long id) {
-        if(!userRepository.existsById(id)) {
+        if (!userRepository.existsById(id)) {
             throw new EntityNotFoundException("not found...");
         }
         userRepository.deleteById(id);
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
-        if(user.isPresent())
+        if (user.isPresent())
             return user.get();
         else
             throw new EntityNotFoundException("not found...");

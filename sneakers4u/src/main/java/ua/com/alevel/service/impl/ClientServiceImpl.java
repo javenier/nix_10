@@ -28,7 +28,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void create(Client entity) {
-        if(clientRepository.existsByEmail(entity.getEmail())) {
+        if (clientRepository.existsByEmail(entity.getEmail())) {
             throw new EntityExistsException("this client exists");
         }
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
@@ -37,7 +37,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void update(Client entity) {
-        if(!clientRepository.existsById(entity.getId())) {
+        if (!clientRepository.existsById(entity.getId())) {
             throw new EntityNotFoundException("not found...");
         }
         clientRepository.save(entity);
@@ -45,7 +45,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void delete(Long id) {
-        if(!clientRepository.existsById(id)) {
+        if (!clientRepository.existsById(id)) {
             throw new EntityNotFoundException("not found...");
         }
         clientCustomRepository.deleteById(id);
@@ -54,7 +54,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client findById(Long id) {
         Optional<Client> client = clientRepository.findById(id);
-        if(client.isPresent())
+        if (client.isPresent())
             return client.get();
         else
             throw new EntityNotFoundException("not found...");
@@ -75,7 +75,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void disableClient(Long id) {
-        if(!clientRepository.existsById(id)) {
+        if (!clientRepository.existsById(id)) {
             throw new EntityNotFoundException("not found...");
         }
         clientCustomRepository.disableClient(id);
@@ -83,7 +83,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void enableClient(Long id) {
-        if(!clientRepository.existsById(id)) {
+        if (!clientRepository.existsById(id)) {
             throw new EntityNotFoundException("not found...");
         }
         clientCustomRepository.enableClient(id);

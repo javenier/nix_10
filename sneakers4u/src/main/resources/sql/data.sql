@@ -1,7 +1,7 @@
-insert into brands values (default, current_timestamp(), current_timestamp(), 'https://c.static-nike.com/a/images/w_1920,c_limit/mdbgldn6yg1gg88jomci/image.jpg', 'Nike');
-insert into brands values (default, current_timestamp(), current_timestamp(), 'https://www.teahub.io/photos/full/65-652378_adidas-logo-wallpaper-hd-logo-adidas-three-stripes.jpg', 'Adidas');
-insert into brands values (default, current_timestamp(), current_timestamp(), 'https://w0.peakpx.com/wallpaper/149/676/HD-wallpaper-new-balance-black-logo-newbalance-running-shoes-sports.jpg', 'New Balance');
-insert into brands values (default, current_timestamp(), current_timestamp(), 'https://www.pixelstalk.net/wp-content/uploads/2015/12/Air-Jordan-Simbolo-Wallpaper-HD.jpg', 'Jordan');
+insert into brands values (default, current_timestamp(), current_timestamp(), 'https://media2.fenom.com/75970-product_large/nike-air-force-1-lx-off-noir.jpg', 'Nike');
+insert into brands values (default, current_timestamp(), current_timestamp(), 'https://media2.fenom.com/75897-product_large/adidas-niteball-carboncore-black.jpg', 'Adidas');
+insert into brands values (default, current_timestamp(), current_timestamp(), 'https://media2.fenom.com/72564-product_large/new-balance-ml574-ba2-grey.jpg', 'New Balance');
+insert into brands values (default, current_timestamp(), current_timestamp(), 'https://media3.fenom.com/76159-product_large/jordan-w-air-jordan-5-retro-low-girls-that-hoop.jpg', 'Jordan');
 
 insert into models values (default, current_timestamp(), current_timestamp(), 'Free Terra Vista', 1);
 insert into models values (default, current_timestamp(), current_timestamp(), 'Air Force 1', 1);

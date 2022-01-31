@@ -57,8 +57,10 @@
                         </tr>
                     </table>
                     <hr>
-                    <a th:href="@{'/admin/orders?clientId=' + ${client.getId()}}" type="button" class="btn btn-primary btn-details mr-5">Show all orders</a>
-                    <a th:href="@{'/admin/clients/edit?id=' + ${client.getId()}}" type="button" class="btn btn-primary btn-details">Edit client</a>
+                    <a th:href="@{'/admin/orders?clientId=' + ${client.getId()}}" type="button"
+                       class="btn btn-primary btn-details mr-5">Show all orders</a>
+                    <a th:href="@{'/admin/clients/edit?id=' + ${client.getId()}}" type="button"
+                       class="btn btn-primary btn-details">Edit client</a>
                 </div>
             </div>
         </div>

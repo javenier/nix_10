@@ -8,8 +8,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import ua.com.alevel.facade.ModelFacade;
 import ua.com.alevel.view.controller.BaseController;
-import ua.com.alevel.view.dto.brand.BrandRequestDto;
-import ua.com.alevel.view.dto.brand.BrandResponseDto;
 import ua.com.alevel.view.dto.model.ModelRequestDto;
 import ua.com.alevel.view.dto.model.ModelResponseDto;
 import ua.com.alevel.view.dto.webrequest.PageData;
@@ -24,10 +22,10 @@ public class AdminModelController extends BaseController {
         this.modelFacade = modelFacade;
     }
 
-    private final HeaderName[] columnNamesForFindAll = new HeaderName[] {
+    private final HeaderName[] columnNamesForFindAll = new HeaderName[]{
             new HeaderName("#", null, null),
             new HeaderName("name", "name", "name"),
-            new HeaderName("brand", "brand", "brand_id"),
+            new HeaderName("brand", null, null),
             new HeaderName("details", null, null),
             new HeaderName("delete", null, null)
     };
@@ -35,7 +33,7 @@ public class AdminModelController extends BaseController {
     @GetMapping
     public String allModels(Model model, WebRequest request, @RequestParam(required = false) Long brandId) {
         PageData<ModelResponseDto> pageData;
-        if(brandId != null) {
+        if (brandId != null) {
             pageData = modelFacade.findAllByBrandId(request, brandId);
         } else {
             pageData = modelFacade.findAll(request);

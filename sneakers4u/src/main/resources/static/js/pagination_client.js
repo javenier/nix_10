@@ -6,11 +6,6 @@ function runPagination(page, size, pageOperator) {
 }
 
 function runSort(sort, order) {
-    if (order === 'desc') {
-        order = 'asc';
-    } else {
-        order = 'desc';
-    }
     let pageData = document.getElementById('pageData');
     const page = pageData.getAttribute('data-page');
     const size = pageData.getAttribute('data-size');

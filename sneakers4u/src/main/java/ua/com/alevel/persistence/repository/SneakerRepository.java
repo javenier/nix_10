@@ -10,4 +10,5 @@ public interface SneakerRepository extends BaseRepository<Sneaker> {
     long countBySneakerGender(Gender gender);
     long countByModelId(Long modelId);
     long countByFullNameContaining(String query);
+    Sneaker findSneakerByVersionOfModel(String version);
 }

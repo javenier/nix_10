@@ -171,7 +171,7 @@ public abstract class BaseController {
         Map<String, String[]> parameterMap = request.getParameterMap();
         if (MapUtils.isNotEmpty(parameterMap)) {
             parameterMap.forEach((key, value) -> {
-                if(!key.equals("_csrf") && !key.equals("${_csrf.parameterName}")) {
+                if (!key.equals("_csrf") && !key.equals("${_csrf.parameterName}")) {
                     model.addAttribute(key, value);
                 }
             });

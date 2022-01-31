@@ -255,7 +255,7 @@ public class SneakerCustomRepositoryImpl implements SneakerCustomRepository {
     }
 
     private void delete(List<Long> modelIds, List<Long> sneakerIds) {
-        if(sneakerIds == null) {
+        if (sneakerIds == null) {
             if (CollectionUtils.isNotEmpty(modelIds)) {
                 sneakerIds = entityManager.
                         createQuery("select s.id from Sneaker s where s.model.id in :modelIds").

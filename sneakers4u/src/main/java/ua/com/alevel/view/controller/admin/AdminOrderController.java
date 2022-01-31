@@ -8,8 +8,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import ua.com.alevel.facade.OrderFacade;
 import ua.com.alevel.view.controller.BaseController;
-import ua.com.alevel.view.dto.model.ModelRequestDto;
-import ua.com.alevel.view.dto.model.ModelResponseDto;
 import ua.com.alevel.view.dto.order.OrderRequestDto;
 import ua.com.alevel.view.dto.order.OrderResponseDto;
 import ua.com.alevel.view.dto.webrequest.PageData;
@@ -20,7 +18,7 @@ public class AdminOrderController extends BaseController {
 
     private final OrderFacade orderFacade;
 
-    private final HeaderName[] columnNamesForFindAll = new HeaderName[] {
+    private final HeaderName[] columnNamesForFindAll = new HeaderName[]{
             new HeaderName("#", null, null),
             new HeaderName("id", "id", "id"),
             new HeaderName("total price", "totalPrice", "total_price"),
@@ -35,7 +33,7 @@ public class AdminOrderController extends BaseController {
     @GetMapping
     public String allOrders(Model model, WebRequest request, @RequestParam(required = false) Long clientId) {
         PageData<OrderResponseDto> pageData;
-        if(clientId != null) {
+        if (clientId != null) {
             pageData = orderFacade.findAllByClientId(request, clientId);
         } else {
             pageData = orderFacade.findAll(request);

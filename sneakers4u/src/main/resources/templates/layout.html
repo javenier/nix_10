@@ -12,77 +12,76 @@
     <link rel="stylesheet" href="/css/client.css">
 </head>
 <body>
-<!--<div class="container h-100" p-0>-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top pr-5 pl-5">
-        <a class="navbar-brand" href="/">
-            <img th:src="@{https://www.svgrepo.com/show/273273/sneakers.svg}" width="35" height="35" alt="">
-            Sneakers4U
-        </a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top pr-5 pl-5">
+    <a class="navbar-brand" href="/">
+        <img th:src="@{https://www.svgrepo.com/show/273273/sneakers.svg}" width="35" height="35" alt="">
+        Sneakers4U
+    </a>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/catalogue/women">Female</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/catalogue/men">Male</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/catalogue/brands">Brands</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/contacts">Contacts</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/profile">Profile</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/cart">Cart</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/catalogue/search}">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchField" th:name="query">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/catalogue/women">Female</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/catalogue/men">Male</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/catalogue/brands">Brands</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/contacts">Contacts</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/profile">Profile</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/cart">Cart</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/catalogue/search}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchField"
+                   th:name="query">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+
+<div class="row mt-2" th:if="${showMessage}">
+    <div class="col">
+        <div th:if="${message}" class="alert alert-primary alert-dismissible fade show" role="alert">
+            <span th:text="${message}">message text</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-    </nav>
-
-
-    <div class="row mt-2" th:if="${showMessage}">
-        <div class="col">
-            <div th:if="${message}" class="alert alert-primary alert-dismissible fade show" role="alert">
-                <span th:text="${message}">message text</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                <span th:text="${errorMessage}">message text</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div th:if="${warnMessage}" class="alert alert-dark alert-dismissible fade show" role="alert">
-                <span th:text="${warnMessage}">message text</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${errorMessage}">message text</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div th:if="${warnMessage}" class="alert alert-dark alert-dismissible fade show" role="alert">
+            <span th:text="${warnMessage}">message text</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     </div>
+</div>
 
-    <section layout:fragment="content"></section>
-<!--</div>-->
+<section layout:fragment="content"></section>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.1/umd/popper.min.js"
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/search.js}"></script>
 
 <th:block layout:fragment="scripts"/>

@@ -5,4 +5,6 @@ import ua.com.alevel.persistence.entity.item.attributes.Brand;
 
 @Repository
 public interface BrandRepository extends BaseRepository<Brand> {
+
+    Brand findByName(String name);
 }

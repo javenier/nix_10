@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import ua.com.alevel.exception.CustomNumberFormatException;
 import ua.com.alevel.facade.SneakerFacade;
 import ua.com.alevel.persistence.type.Gender;
 import ua.com.alevel.view.controller.BaseController;
@@ -21,8 +22,8 @@ public class AdminSneakerController extends BaseController {
 
     private final HeaderName[] columnNamesForFindAll = new HeaderName[]{
             new HeaderName("#", null, null),
-            new HeaderName("brand", "brand", null),
-            new HeaderName("model", "model", null),
+            new HeaderName("brand", null, null),
+            new HeaderName("model", null, null),
             new HeaderName("version", "versionOfModel", "version_of_model"),
             new HeaderName("price", "price", "price"),
             new HeaderName("quantity", "quantity", "quantity"),
@@ -74,6 +75,16 @@ public class AdminSneakerController extends BaseController {
 
     @PostMapping("/new")
     public String createNewSneaker(@ModelAttribute("sneaker") SneakerRequestDto dto) {
+        try {
+            Double.parseDouble(dto.getPrice().toString());
+        } catch (NumberFormatException e) {
+            throw new CustomNumberFormatException("Invalid price.");
+        }
+        try {
+            Integer.parseInt(dto.getQuantity().toString());
+        } catch (NumberFormatException e) {
+            throw new CustomNumberFormatException("Invalid quantity.");
+        }
         sneakerFacade.create(dto);
         return "redirect:/admin/sneakers";
     }

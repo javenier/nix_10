@@ -37,9 +37,6 @@ html, body {
 .pagination_rounded,
 .pagination_square {
     display: inline-block;
-    /*width: 100%;*/
-    /*margin-left: 400px;*/
-    /*margin-top: 300px;*/
 }
 
 .pagination_rounded ul {
@@ -95,24 +92,6 @@ a:link {
     margin-left: 10px
 }
 
-/*.custom-for-pagination {*/
-/*    float: left;*/
-/*    color: #4285f4;*/
-/*    border-radius: 50%;*/
-/*    line-height: 30px;*/
-/*    height: 30px;*/
-/*    width: 30px;*/
-/*    text-align: center;*/
-/*    margin-bottom: 40px;*/
-/*    border: 1px solid #e0e0e0*/
-/*}*/
-
-/*.custom-for-pagination li:hover a:hover {*/
-/*    background: #4285f4;*/
-/*    color: #fff;*/
-/*    border: 1px solid #4285f4*/
-/*}*/
-
 .pagination_rounded .next {
     border-radius: 35px;
     width: 90px;
@@ -131,7 +110,6 @@ a:link {
 
 .current-page {
     background: #4285f4;
-    /*color: #fff;*/
 }
 
 #searchField {

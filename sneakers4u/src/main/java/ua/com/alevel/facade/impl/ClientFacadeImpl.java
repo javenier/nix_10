@@ -5,14 +5,10 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.datatable.DataTableRequest;
 import ua.com.alevel.datatable.DataTableResponse;
 import ua.com.alevel.facade.ClientFacade;
-import ua.com.alevel.persistence.entity.item.attributes.Model;
-import ua.com.alevel.persistence.entity.order.Order;
 import ua.com.alevel.persistence.entity.user.Client;
 import ua.com.alevel.persistence.type.Gender;
 import ua.com.alevel.service.ClientService;
-import ua.com.alevel.util.MoneyConverterUtil;
 import ua.com.alevel.util.WebRequestUtil;
-import ua.com.alevel.view.dto.model.ModelResponseDto;
 import ua.com.alevel.view.dto.user.ClientRequestDto;
 import ua.com.alevel.view.dto.user.ClientResponseDto;
 import ua.com.alevel.view.dto.webrequest.PageAndSizeData;
@@ -46,7 +42,7 @@ public class ClientFacadeImpl implements ClientFacade {
     @Override
     public void update(ClientRequestDto clientRequestDto) {
         Client client = clientService.findById(clientRequestDto.getId());
-        if(client != null) {
+        if (client != null) {
             client.setAge(clientRequestDto.getAge());
             client.setFirstName(clientRequestDto.getFirstName());
             client.setLastName(clientRequestDto.getLastName());

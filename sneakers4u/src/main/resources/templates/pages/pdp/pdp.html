@@ -12,14 +12,11 @@
 <body>
 
 <div layout:fragment="content">
-    <!-- Page Content -->
     <div class="container">
-        <!-- Portfolio Item Heading -->
         <h1 class="my-4 mt-5"
             th:text="${sneaker.getBrand()} + ' ' + ${sneaker.getModel()} + ' ' + ${sneaker.getVersionOfModel()}">
             Pair</h1>
 
-        <!-- Portfolio Item Row -->
         <div class="row">
             <div class="col-md-7">
                 <img class="img-fluid"
@@ -54,23 +51,28 @@
                     </li>
                 </ul>
 
-                <form action="#" th:action="@{'/catalogue/details/' + ${sneaker.getId()}}" th:object="${cartItem}" method="post">
-                <div class="form-group">
-                    <h5 for="size">Choose size</h5>
-                    <select class="form-control" id="size" th:field="*{sizeId}">
-                        <option th:each="size : ${sizes}"
-                                th:value="${size.getId()}"
-                                th:text="${size.getSize()}">
-                        </option>
-                    </select>
-                </div>
-                    <input type="hidden" id="sneakerId" aria-describedby="sneakerId" th:value="${cartItem.sneakerId}" th:field="*{sneakerId}">
-                <button type="submit" class="btn btn-outline-dark mt-2 btn-lg btn-block" th:if="${inStock}">Add to cart</button>
-                    <button type="submit" class="btn btn-outline-dark mt-2 btn-lg btn-block" th:if="${!inStock}" disabled>Add to cart</button>
+                <form action="#" th:action="@{'/catalogue/details/' + ${sneaker.getId()}}" th:object="${cartItem}"
+                      method="post">
+                    <div class="form-group">
+                        <h5 for="size">Choose size</h5>
+                        <select class="form-control" id="size" th:field="*{sizeId}">
+                            <option th:each="size : ${sizes}"
+                                    th:value="${size.getId()}"
+                                    th:text="${size.getSize()}">
+                            </option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="sneakerId" aria-describedby="sneakerId" th:value="${cartItem.sneakerId}"
+                           th:field="*{sneakerId}">
+                    <button type="submit" class="btn btn-outline-dark mt-2 btn-lg btn-block" th:if="${inStock}">Add to
+                        cart
+                    </button>
+                    <button type="submit" class="btn btn-outline-dark mt-2 btn-lg btn-block" th:if="${!inStock}"
+                            disabled>Add to cart
+                    </button>
 
                 </form>
 
-                <!-- List with icons -->
                 <ul class="list-unstyled list mt-4">
                     <li class="mb-3 d-flex align-items-center"><i class="fa fa-truck mr-3 text-secondary"></i>Fast
                         worldwide shipping from Europe.
@@ -85,15 +87,11 @@
 
             </div>
         </div>
-        <!-- /.row -->
-        <!-- Description Row -->
         <h3 class="my-4">Description</h3>
         <div class="row ml-1">
             <p th:text="${sneaker.getDescription()}">Pair description</p>
         </div>
-        <!-- /.row -->
     </div>
-    <!-- /.container -->
 </div>
 
 

@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 public final class MoneyConverterUtil {
 
-    private MoneyConverterUtil() { }
+    private MoneyConverterUtil() {
+    }
 
     public static long stringToPenny(String src) {
         BigDecimal amount = new BigDecimal(src).setScale(2);

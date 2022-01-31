@@ -1,8 +1,6 @@
 body {
-    /*min-height: 100vh;*/
     vertical-align: middle;
     display: block;
-    /*padding-top: 70px;*/
 }
 
 .title {
@@ -11,14 +9,13 @@ body {
 
 .card {
     margin: auto;
-    /*max-width: 2000px;*/
     width: 90%;
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 1rem;
     border: transparent;
 }
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
     .card {
         margin: 3vh auto
     }
@@ -31,7 +28,7 @@ body {
     border-top-left-radius: 1rem
 }
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
     .cart {
         padding: 4vh;
         border-bottom-left-radius: unset;
@@ -90,7 +87,6 @@ hr {
     background-position-y: center
 }
 
-/* List with bullets */
 .list-bullets {
     list-style: none;
 }

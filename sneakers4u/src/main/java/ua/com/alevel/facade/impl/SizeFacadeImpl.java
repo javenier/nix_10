@@ -37,7 +37,7 @@ public class SizeFacadeImpl implements SizeFacade {
     @Override
     public void update(SizeRequestDto sizeRequestDto) {
         Size size = sizeService.findById(sizeRequestDto.getId());
-        if(size != null) {
+        if (size != null) {
             size.setSize(sizeRequestDto.getSize());
             sizeService.update(size);
         }

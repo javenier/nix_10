@@ -73,7 +73,7 @@ public class ClientCustomRepositoryImpl implements ClientCustomRepository {
         client.setAge(age);
         client.setFirstName(firstName);
         client.setLastName(lastName);
-        if(gender != null)
+        if (gender != null)
             client.setGender(gender.equals("MALE") ? Gender.MALE : Gender.FEMALE);
         return client;
     }

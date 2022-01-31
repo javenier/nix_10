@@ -10,7 +10,6 @@ import ua.com.alevel.facade.BrandFacade;
 import ua.com.alevel.view.controller.BaseController;
 import ua.com.alevel.view.dto.brand.BrandRequestDto;
 import ua.com.alevel.view.dto.brand.BrandResponseDto;
-import ua.com.alevel.view.dto.size.SizeRequestDto;
 import ua.com.alevel.view.dto.webrequest.PageData;
 
 @Controller
@@ -23,7 +22,7 @@ public class AdminBrandController extends BaseController {
         this.brandFacade = brandFacade;
     }
 
-    private final HeaderName[] columnNamesForFindAll = new HeaderName[] {
+    private final HeaderName[] columnNamesForFindAll = new HeaderName[]{
             new HeaderName("#", null, null),
             new HeaderName("name", "name", "name"),
             new HeaderName("details", null, null),

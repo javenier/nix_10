@@ -18,12 +18,13 @@ public class WebRequestUtil {
     public static final int DEFAULT_PAGE_PARAM_VALUE = 1;
     public static final int DEFAULT_SIZE_PARAM_VALUE = 12;
 
-    private WebRequestUtil() { }
+    private WebRequestUtil() {
+    }
 
     public static PageAndSizeData generatePageAndSizeData(WebRequest webRequest, Integer customPageSize) {
         int page = webRequest.getParameter(PAGE_PARAM) != null ? Integer.parseInt(Objects.requireNonNull(webRequest.getParameter(PAGE_PARAM))) : DEFAULT_PAGE_PARAM_VALUE;
         int size;
-        if(customPageSize == null)
+        if (customPageSize == null)
             size = webRequest.getParameter(SIZE_PARAM) != null ? Integer.parseInt(Objects.requireNonNull(webRequest.getParameter(SIZE_PARAM))) : DEFAULT_SIZE_PARAM_VALUE;
         else
             size = customPageSize;

@@ -29,7 +29,7 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public void update(UserRequestDto userRequestDto) {
         User user = userService.findById(userRequestDto.getId());
-        if(user != null) {
+        if (user != null) {
             user.setEmail(userRequestDto.getEmail());
             user.setPassword(userRequestDto.getPassword());
             userService.update(user);

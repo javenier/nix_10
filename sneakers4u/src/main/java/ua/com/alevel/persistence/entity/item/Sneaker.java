@@ -2,7 +2,6 @@ package ua.com.alevel.persistence.entity.item;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import ua.com.alevel.persistence.entity.item.attributes.Brand;
 import ua.com.alevel.persistence.entity.item.attributes.Model;
 import ua.com.alevel.persistence.entity.item.attributes.Size;
 import ua.com.alevel.persistence.entity.order.Order;

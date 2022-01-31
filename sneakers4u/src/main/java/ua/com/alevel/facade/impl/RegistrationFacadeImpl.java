@@ -14,6 +14,7 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
     public RegistrationFacadeImpl(ClientService clientService) {
         this.clientService = clientService;
     }
+
     @Override
     public void registration(AuthDto dto) {
         Client client = new Client();

@@ -40,7 +40,7 @@ public class SizeCustomRepositoryImpl implements SizeCustomRepository {
                 limit + "," +
                 request.getPageSize()).getResultList();
 
-        for(Object[] object : sizesRl) {
+        for (Object[] object : sizesRl) {
             Size size = convertResultSetToSize(object);
             sizes.add(size);
         }
@@ -78,7 +78,7 @@ public class SizeCustomRepositoryImpl implements SizeCustomRepository {
                 limit + "," +
                 request.getPageSize()).getResultList();
 
-        for(Object[] object : sizesRl) {
+        for (Object[] object : sizesRl) {
             Size size = convertResultSetToSize(object);
             sizes.add(size);
         }

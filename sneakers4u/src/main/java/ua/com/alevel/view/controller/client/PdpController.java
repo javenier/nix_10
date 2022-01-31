@@ -37,7 +37,7 @@ public class PdpController extends BaseController {
         model.addAttribute("sneaker", sneaker);
         model.addAttribute("sizes", sizes);
         model.addAttribute("cartItem", cartItemRequestDto);
-        if(sneaker.getQuantity() > 0) {
+        if (sneaker.getQuantity() > 0) {
             model.addAttribute("inStock", true);
         } else {
             model.addAttribute("inStock", false);
@@ -47,7 +47,7 @@ public class PdpController extends BaseController {
 
     @PostMapping("/{id}")
     public String addToCart(@ModelAttribute("cartItem") CartItemRequestDto cartItemRequestDto) {
-        if(!securityService.isAuthenticated()) {
+        if (!securityService.isAuthenticated()) {
             return "redirect:/login";
         }
         sneakerFacade.addToCart(cartItemRequestDto);

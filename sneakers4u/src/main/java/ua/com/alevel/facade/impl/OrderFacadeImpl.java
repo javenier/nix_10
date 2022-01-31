@@ -44,7 +44,7 @@ public class OrderFacadeImpl implements OrderFacade {
     @Override
     public void update(OrderRequestDto orderRequestDto) {
         Order order = orderService.findById(orderRequestDto.getId());
-        if(order != null) {
+        if (order != null) {
             order.setAddress(orderRequestDto.getAddress());
             order.setComment(orderRequestDto.getComment());
             order.setPostOffice(orderRequestDto.getPostOffice());
@@ -125,12 +125,12 @@ public class OrderFacadeImpl implements OrderFacade {
     @Override
     public void confirmOrder(OrderRequestDto requestDto) {
         Order order = orderService.findById(requestDto.getId());
-        if(order != null) {
+        if (order != null) {
             order.setAddress(requestDto.getAddress());
             order.setComment(requestDto.getComment());
             order.setPostOffice(requestDto.getPostOffice());
             order.setFinished(true);
-            for(Sneaker sneaker : order.getSneakers()) {
+            for (Sneaker sneaker : order.getSneakers()) {
                 sneaker.setQuantity(sneaker.getQuantity() - 1);
                 sneakerService.update(sneaker);
             }

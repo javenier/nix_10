@@ -37,7 +37,7 @@ public class BrandFacadeImpl implements BrandFacade {
     @Override
     public void update(BrandRequestDto brandRequestDto) {
         Brand brand = brandService.findById(brandRequestDto.getId());
-        if(brand != null) {
+        if (brand != null) {
             brand.setName(brandRequestDto.getName());
             brand.setImageUrl(brandRequestDto.getImageUrl());
             brandService.update(brand);

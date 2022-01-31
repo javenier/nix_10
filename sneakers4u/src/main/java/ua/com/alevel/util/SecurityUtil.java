@@ -8,7 +8,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class SecurityUtil {
 
-    private SecurityUtil() { }
+    private SecurityUtil() {
+    }
 
     public static boolean hasRole(String role) {
         Authentication authentication = SecurityUtil.getAuthentication();

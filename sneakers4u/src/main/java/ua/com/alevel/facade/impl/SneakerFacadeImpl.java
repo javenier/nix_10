@@ -55,7 +55,7 @@ public class SneakerFacadeImpl implements SneakerFacade {
     @Override
     public void update(SneakerRequestDto sneakerRequestDto) {
         Sneaker sneaker = sneakerService.findById(sneakerRequestDto.getId());
-        if(sneaker != null) {
+        if (sneaker != null) {
             sneaker.setDescription(sneakerRequestDto.getDescription());
             sneaker.setQuantity(sneakerRequestDto.getQuantity());
             sneaker.setPrice(MoneyConverterUtil.stringToPenny(sneakerRequestDto.getPrice()));

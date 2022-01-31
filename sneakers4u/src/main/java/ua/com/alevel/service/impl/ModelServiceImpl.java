@@ -29,7 +29,7 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public void update(Model entity) {
-        if(!modelRepository.existsById(entity.getId())) {
+        if (!modelRepository.existsById(entity.getId())) {
             throw new EntityNotFoundException("not found...");
         }
         modelRepository.save(entity);
@@ -37,7 +37,7 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public void delete(Long id) {
-        if(!modelRepository.existsById(id)) {
+        if (!modelRepository.existsById(id)) {
             throw new EntityNotFoundException("not found...");
         }
         modelCustomRepository.deleteById(id);
@@ -46,7 +46,7 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public Model findById(Long id) {
         Optional<Model> model = modelRepository.findById(id);
-        if(model.isPresent())
+        if (model.isPresent())
             return model.get();
         else
             throw new EntityNotFoundException("not found...");

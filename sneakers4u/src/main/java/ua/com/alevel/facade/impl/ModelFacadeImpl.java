@@ -40,7 +40,7 @@ public class ModelFacadeImpl implements ModelFacade {
     @Override
     public void update(ModelRequestDto modelRequestDto) {
         Model model = modelService.findById(modelRequestDto.getId());
-        if(model != null) {
+        if (model != null) {
             model.setName(modelRequestDto.getName());
             modelService.update(model);
         }

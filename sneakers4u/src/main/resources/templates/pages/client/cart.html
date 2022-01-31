@@ -38,7 +38,8 @@
                                     <div class="col" th:text="${cartItem.getPrice() + ' $'}">&euro; 44.00</div>
                                     <div class="col">
                                         <a class="close" aria-label="Close"
-                                           th:href="'cart/delete?orderId=' + ${orderId} + '&sneakerId=' + ${cartItem.getId()}" role="button">
+                                           th:href="'cart/delete?orderId=' + ${orderId} + '&sneakerId=' + ${cartItem.getId()}"
+                                           role="button">
                                             <span aria-hidden="true">&#10005;</span>
                                         </a>
                                     </div>
