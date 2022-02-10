@@ -27,12 +27,4 @@ public class SortData {
     public void setOrder(String order) {
         this.order = order;
     }
-
-    @Override
-    public String toString() {
-        return "SortData{" +
-                "sort='" + sort + '\'' +
-                ", order='" + order + '\'' +
-                '}';
-    }
 }

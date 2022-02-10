@@ -35,10 +35,9 @@ public class PageData<RES extends ResponseDto> {
         this.showLast = false;
     }
 
-    //added param
     public void initPaginationState(int currentPage) {
         if (pageSize < itemsSize) {
-            this.totalPageSize = (int) itemsSize / pageSize; // TODO fix this
+            this.totalPageSize = (int) itemsSize / pageSize;
             this.showFirst = currentPage != 1;
             this.showPrevious = currentPage - 1 != 0;
             this.showLast = currentPage - 1 != totalPageSize;

@@ -27,7 +27,7 @@ public class SyncElasticCronService {
         this.sneakerCustomRepository = sneakerCustomRepository;
     }
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(cron = "0 0 0 * * ?")
     public void syncToElastic() {
         elasticsearchOperations.indexOps(SneakerIndex.class).refresh();
         sneakerIndexRepository.deleteAll();

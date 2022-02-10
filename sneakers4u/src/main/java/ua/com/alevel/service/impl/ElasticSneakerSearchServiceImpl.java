@@ -26,7 +26,6 @@ public class ElasticSneakerSearchServiceImpl implements ElasticSneakerSearchServ
 
     @Override
     public List<String> searchBySneakerName(String query) {
-        System.out.println(query);
         QueryBuilder queryBuilder = QueryBuilders.
                 wildcardQuery("sneakerName", "*" + query.toLowerCase() + "*");
         Query searchQuery = new NativeSearchQueryBuilder().

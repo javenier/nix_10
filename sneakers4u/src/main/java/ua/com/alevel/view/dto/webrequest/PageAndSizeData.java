@@ -27,12 +27,4 @@ public class PageAndSizeData {
     public void setSize(int size) {
         this.size = size;
     }
-
-    @Override
-    public String toString() {
-        return "PageAndSizeData{" +
-                "page=" + page +
-                ", size=" + size +
-                '}';
-    }
 }
