@@ -11,4 +11,6 @@ public interface ClientService extends BaseService<Client> {
     void enableClient(Long id);
 
     Long findUnfinishedOrderId(Long clientId);
+
+    boolean isActivatedByEmail(String code);
 }

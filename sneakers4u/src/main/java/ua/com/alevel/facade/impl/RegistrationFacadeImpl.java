@@ -6,6 +6,8 @@ import ua.com.alevel.persistence.entity.user.Client;
 import ua.com.alevel.service.ClientService;
 import ua.com.alevel.view.dto.auth.AuthDto;
 
+import java.util.UUID;
+
 @Service
 public class RegistrationFacadeImpl implements RegistrationFacade {
 
@@ -20,6 +22,7 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
         Client client = new Client();
         client.setEmail(dto.getEmail());
         client.setPassword(dto.getPassword());
+        client.setActivationCode(UUID.randomUUID().toString());
         clientService.create(client);
     }
 }

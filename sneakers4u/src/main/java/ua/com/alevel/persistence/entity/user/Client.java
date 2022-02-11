@@ -7,6 +7,7 @@ import ua.com.alevel.persistence.type.RoleType;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @DiscriminatorValue("CLIENT")
@@ -19,6 +20,9 @@ public class Client extends User {
     private String lastName;
 
     private Integer age;
+
+    @Column(name = "activation_code")
+    private String activationCode;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -70,5 +74,13 @@ public class Client extends User {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
     }
 }

@@ -9,6 +9,7 @@ import ua.com.alevel.persistence.entity.user.Client;
 import ua.com.alevel.persistence.repository.ClientRepository;
 import ua.com.alevel.persistence.repository.custom.ClientCustomRepository;
 import ua.com.alevel.service.ClientService;
+import ua.com.alevel.service.mail.MailSender;
 
 import javax.persistence.EntityExistsException;
 import java.util.Optional;
@@ -19,11 +20,13 @@ public class ClientServiceImpl implements ClientService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final ClientRepository clientRepository;
     private final ClientCustomRepository clientCustomRepository;
+    private final MailSender mailSender;
 
-    public ClientServiceImpl(BCryptPasswordEncoder passwordEncoder, ClientRepository clientRepository, ClientCustomRepository clientCustomRepository) {
+    public ClientServiceImpl(BCryptPasswordEncoder passwordEncoder, ClientRepository clientRepository, ClientCustomRepository clientCustomRepository, MailSender mailSender) {
         this.passwordEncoder = passwordEncoder;
         this.clientRepository = clientRepository;
         this.clientCustomRepository = clientCustomRepository;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -33,6 +36,13 @@ public class ClientServiceImpl implements ClientService {
         }
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         clientRepository.save(entity);
+        String message = String.format(
+                "Hello! \n" +
+                "Welcome to Sneakers4u. Please, visit next link to verify your email: " +
+                        "http://localhost:8080/activate/%s",
+                entity.getActivationCode()
+        );
+        mailSender.send(entity.getEmail(), "Activation", message);
     }
 
     @Override
@@ -92,5 +102,15 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Long findUnfinishedOrderId(Long clientId) {
         return clientCustomRepository.findUnfinishedOrderId(clientId);
+    }
+
+    @Override
+    public boolean isActivatedByEmail(String code) {
+        Client client = clientRepository.findByActivationCode(code);
+        if(client == null)
+            return false;
+        client.setActivationCode(null);
+        clientRepository.save(client);
+        return true;
     }
 }

@@ -5,11 +5,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ua.com.alevel.config.security.SecurityService;
 import ua.com.alevel.facade.AuthValidatorFacade;
 import ua.com.alevel.facade.RegistrationFacade;
 import ua.com.alevel.persistence.type.RoleType;
+import ua.com.alevel.service.ClientService;
 import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.view.controller.BaseController;
 import ua.com.alevel.view.dto.auth.AuthDto;
@@ -20,14 +22,16 @@ public class AuthController extends BaseController {
     private final RegistrationFacade registrationFacade;
     private final AuthValidatorFacade authValidatorFacade;
     private final SecurityService securityService;
+    private final ClientService clientService;
 
     public AuthController(
             RegistrationFacade registrationFacade,
             AuthValidatorFacade authValidatorFacade,
-            SecurityService securityService) {
+            SecurityService securityService, ClientService clientService) {
         this.registrationFacade = registrationFacade;
         this.authValidatorFacade = authValidatorFacade;
         this.securityService = securityService;
+        this.clientService = clientService;
     }
 
     @GetMapping("/login")
@@ -70,6 +74,18 @@ public class AuthController extends BaseController {
         registrationFacade.registration(authForm);
         securityService.autoLogin(authForm.getEmail(), authForm.getConfirmPassword());
         return redirectProcess(model);
+    }
+
+    @GetMapping("/activate/{code}")
+    public String activation(Model model, @PathVariable String code) {
+        boolean isActivated = clientService.isActivatedByEmail(code);
+        if(isActivated) {
+            model.addAttribute("message", "You have successfully verified your email.");
+        } else {
+            model.addAttribute("message", "Code not found");
+        }
+        return "activation";
+
     }
 
     private String redirectProcess(Model model) {
